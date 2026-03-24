@@ -1,0 +1,44 @@
+[
+  {
+    "tier": "Single Session",
+    "duration": "1 hour",
+    "price": "$XX",
+    "unit": "/hr",
+    "description": "Perfect for casual players or trying it out",
+    "features": [
+      "Full Trackman iO simulator access",
+      "200+ virtual courses",
+      "Swing analytics dashboard",
+      "Clubs provided"
+    ],
+    "highlighted": false
+  },
+  {
+    "tier": "Extended Play",
+    "duration": "2 hours",
+    "price": "$XX",
+    "unit": "/2hr",
+    "description": "Ideal for serious practice sessions",
+    "features": [
+      "Everything in Single Session",
+      "Extended practice time",
+      "Save & compare session data",
+      "Best value per hour"
+    ],
+    "highlighted": true
+  },
+  {
+    "tier": "Monthly Member",
+    "duration": "Unlimited*",
+    "price": "$XXX",
+    "unit": "/mo",
+    "description": "For frequent players who want unlimited access",
+    "features": [
+      "Unlimited simulator time",
+      "Priority booking",
+      "Member-only time slots",
+      "Bring a guest free once/month"
+    ],
+    "highlighted": false
+  }
+]

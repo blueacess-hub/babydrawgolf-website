@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Baby Draw Golf Website
+
+Single-page landing site for Baby Draw Golf — a 24/7 unmanned indoor golf simulator facility in Cypress, TX.
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router, TypeScript)
+- **Styling**: Tailwind CSS v4
+- **Icons**: Lucide React + custom SVG social icons
+- **Hosting**: Vercel (static export, free tier)
+- **Analytics**: Google Analytics 4 (optional)
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Copy env file and fill in values
+cp .env.local.example .env.local
+
+# Run dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Configuration
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copy `.env.local.example` to `.env.local` and fill in:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `NEXT_PUBLIC_TRACKMAN_BOOKING_URL` | Yes | Trackman booking portal URL for your venue |
+| `NEXT_PUBLIC_GA_ID` | No | Google Analytics 4 measurement ID |
+| `NEXT_PUBLIC_GOOGLE_MAPS_EMBED` | No | Google Maps embed URL (falls back to Cypress, TX area) |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | No | Contact email (defaults to info@babydrawgolf.net) |
 
-## Learn More
+Without `NEXT_PUBLIC_TRACKMAN_BOOKING_URL`, all Book Now buttons show "Coming Soon".
 
-To learn more about Next.js, take a look at the following resources:
+## Editable Data Files
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Update these JSON files to change content without touching components:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `src/data/site.json` — Business name, address, email, social links
+- `src/data/pricing.json` — Pricing tiers, features, descriptions
+- `src/data/faq.json` — FAQ questions and answers
 
-## Deploy on Vercel
+## Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Push to GitHub
+2. Connect repo to [Vercel](https://vercel.com)
+3. Add environment variables in Vercel dashboard
+4. Add custom domain `babydrawgolf.net` in Vercel
+5. Update Namecheap DNS: CNAME -> `cname.vercel-dns.com`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## SEO
+
+Includes:
+- Meta tags (title, description, OG, Twitter cards)
+- JSON-LD structured data (SportsActivityLocation + FAQPage)
+- Semantic HTML with proper heading hierarchy
+- Static generation for maximum page speed
+
+## Replacing Placeholder Images
+
+The site uses Unsplash stock photos. Replace the image URLs in:
+- `src/components/Hero.tsx` — Hero background
+- `src/components/About.tsx` — About section image
+- `src/components/Simulator.tsx` — Simulator showcase image

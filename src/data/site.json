@@ -1,0 +1,20 @@
+{
+  "name": "BABYDRAW GOLF",
+  "tagline": "Your Private Golf Bay. Open 24/7.",
+  "subTagline": "Tour-level Trackman iO simulator in Cypress, TX. Book anytime. No staff needed.",
+  "address": {
+    "street": "Suite 501, Oakhouse Business Park",
+    "city": "Cypress",
+    "state": "TX",
+    "zip": "",
+    "full": "Suite 501, Oakhouse Business Park, Cypress, TX"
+  },
+  "hours": "24/7 (Unmanned, Self-Service)",
+  "email": "info@babydrawgolf.net",
+  "domain": "babydrawgolf.net",
+  "social": {
+    "instagram": "https://instagram.com/babydrawgolf",
+    "tiktok": "https://tiktok.com/@babydrawgolf",
+    "facebook": "https://facebook.com/babydrawgolf"
+  }
+}
