@@ -1,10 +1,11 @@
 'use client';
 
-import { Globe, BarChart3, Target, Users } from 'lucide-react';
+import { Globe, BarChart3, Target, Users, Video } from 'lucide-react';
 
 const features = [
   { icon: Globe, title: '200+ Virtual Courses', description: 'Play Pebble Beach, St Andrews, and more.' },
   { icon: BarChart3, title: 'Full Swing Analytics', description: 'Ball speed, launch angle, spin rate, club path.' },
+  { icon: Video, title: 'Slow-Mo Swing Replay', description: 'High-speed camera captures your swing for frame-by-frame analysis.' },
   { icon: Target, title: 'Practice Modes', description: 'Driving range, closest to pin, skills challenges.' },
   { icon: Users, title: 'Multiplayer Ready', description: 'Compete with friends in head-to-head rounds.' },
 ];
@@ -34,14 +35,14 @@ export default function Simulator() {
               Dual-radar tracking captures every aspect of your swing with tour-level accuracy.
             </p>
 
-            <div className="grid grid-cols-2 gap-3 mt-6">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 mt-5">
               {features.map((f) => (
-                <div key={f.title} className="bg-white rounded-lg p-3 shadow-sm">
-                  <div className="flex items-center gap-2">
-                    <f.icon className="w-4 h-4 text-primary" />
-                    <h3 className="font-bold text-primary-dark text-sm">{f.title}</h3>
+                <div key={f.title} className="bg-white rounded-lg p-2.5 shadow-sm">
+                  <div className="flex items-center gap-1.5">
+                    <f.icon className="w-3.5 h-3.5 text-primary shrink-0" />
+                    <h3 className="font-bold text-primary-dark text-xs">{f.title}</h3>
                   </div>
-                  <p className="mt-1 text-xs text-gray-text">{f.description}</p>
+                  <p className="mt-0.5 text-[10px] text-gray-text">{f.description}</p>
                 </div>
               ))}
             </div>
