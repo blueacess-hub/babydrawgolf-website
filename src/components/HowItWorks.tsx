@@ -11,7 +11,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="h-full flex items-center bg-primary-dark">
+    <section className="h-full flex items-center bg-primary-dark pt-14 md:pt-0">
       <div className="max-w-5xl mx-auto px-6 lg:px-8 py-12 w-full text-center">
         <p className="text-primary-light font-semibold text-sm tracking-widest uppercase">Getting Started</p>
         <h2 className="mt-2 text-3xl lg:text-4xl font-bold text-white tracking-tight">

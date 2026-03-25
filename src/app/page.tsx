@@ -84,16 +84,18 @@ export default function Home() {
         <div className="section-card"><Location /></div>
       </div>
 
-      <button onClick={() => { if (!scrollRef.current) return; const w = scrollRef.current.clientWidth; const cur = Math.round(scrollRef.current.scrollLeft / w); if (cur > 0) scrollRef.current.scrollTo({ left: (cur - 1) * w, behavior: 'smooth' }); }} className={`fixed left-4 top-1/2 -translate-y-1/2 z-40 w-10 h-10 bg-white/80 backdrop-blur rounded-full shadow-lg flex items-center justify-center hover:bg-white transition cursor-pointer ${activeIndex === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`} aria-label="Previous">
+      {/* Arrows — hidden on mobile, shown on md+ */}
+      <button onClick={() => { if (!scrollRef.current) return; const w = scrollRef.current.clientWidth; const cur = Math.round(scrollRef.current.scrollLeft / w); if (cur > 0) scrollRef.current.scrollTo({ left: (cur - 1) * w, behavior: 'smooth' }); }} className={`hidden md:flex fixed left-4 top-1/2 -translate-y-1/2 z-40 w-10 h-10 bg-white/80 backdrop-blur rounded-full shadow-lg items-center justify-center hover:bg-white transition cursor-pointer ${activeIndex === 0 ? 'md:hidden' : ''}`} aria-label="Previous">
         <ChevronLeft className="w-5 h-5 text-primary-dark" />
       </button>
-      <button onClick={() => { if (!scrollRef.current) return; const w = scrollRef.current.clientWidth; const cur = Math.round(scrollRef.current.scrollLeft / w); if (cur < sections.length - 1) scrollRef.current.scrollTo({ left: (cur + 1) * w, behavior: 'smooth' }); }} className={`fixed right-4 top-1/2 -translate-y-1/2 z-40 w-10 h-10 bg-white/80 backdrop-blur rounded-full shadow-lg flex items-center justify-center hover:bg-white transition cursor-pointer ${activeIndex >= sections.length - 1 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`} aria-label="Next">
+      <button onClick={() => { if (!scrollRef.current) return; const w = scrollRef.current.clientWidth; const cur = Math.round(scrollRef.current.scrollLeft / w); if (cur < sections.length - 1) scrollRef.current.scrollTo({ left: (cur + 1) * w, behavior: 'smooth' }); }} className={`hidden md:flex fixed right-4 top-1/2 -translate-y-1/2 z-40 w-10 h-10 bg-white/80 backdrop-blur rounded-full shadow-lg items-center justify-center hover:bg-white transition cursor-pointer ${activeIndex >= sections.length - 1 ? 'md:hidden' : ''}`} aria-label="Next">
         <ChevronRight className="w-5 h-5 text-primary-dark" />
       </button>
 
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 bg-black/20 backdrop-blur-sm rounded-full px-3 py-1.5">
+      {/* Dot indicators */}
+      <div className="fixed bottom-3 md:bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-1.5 md:gap-2 bg-black/20 backdrop-blur-sm rounded-full px-2 md:px-3 py-1">
         {sections.map((s, i) => (
-          <button key={s.id} onClick={() => scrollToIndex(i)} className={`transition-all duration-300 rounded-full cursor-pointer ${i === activeIndex ? 'w-7 h-2 bg-white' : 'w-2 h-2 bg-white/40 hover:bg-white/70'}`} aria-label={s.label} />
+          <button key={s.id} onClick={() => scrollToIndex(i)} className={`transition-all duration-300 rounded-full cursor-pointer ${i === activeIndex ? 'w-5 md:w-7 h-1.5 md:h-2 bg-white' : 'w-1.5 md:w-2 h-1.5 md:h-2 bg-white/40 hover:bg-white/70'}`} aria-label={s.label} />
         ))}
       </div>
     </>

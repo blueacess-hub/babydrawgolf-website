@@ -11,7 +11,7 @@ const features = [
 
 export default function Simulator() {
   return (
-    <section className="h-full flex items-center bg-alt-bg">
+    <section className="h-full flex items-center bg-alt-bg pt-14 md:pt-0">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12 w-full">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           {/* Left — Image */}

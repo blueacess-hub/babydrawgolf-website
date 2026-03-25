@@ -32,15 +32,12 @@ body {
   scroll-snap-type: x mandatory;
   height: 100vh;
   -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .horizontal-scroll::-webkit-scrollbar {
   display: none;
-}
-
-.horizontal-scroll {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
 /* Each section card */
@@ -54,11 +51,8 @@ body {
   flex-shrink: 0;
 }
 
-/* Hide scrollbar inside cards too */
+/* Mobile: hide scrollbar inside cards */
 .section-card::-webkit-scrollbar {
-  width: 4px;
-}
-.section-card::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.15);
-  border-radius: 4px;
+  width: 0;
+  display: none;
 }
