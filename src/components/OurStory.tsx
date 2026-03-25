@@ -3,9 +3,9 @@
 import { Heart, Trophy, Users, Clock } from 'lucide-react';
 
 const values = [
-  { icon: Heart, title: 'Born from Passion', desc: 'We live and breathe golf. This bay exists because we wanted one ourselves.' },
-  { icon: Users, title: 'Community First', desc: 'Raising the game for every golfer in Cypress — beginners to scratch players.' },
-  { icon: Trophy, title: 'Compete & Grow', desc: 'Monthly tournaments, leagues, and skill challenges to push each other.' },
+  { icon: Heart, title: 'Born from Passion', desc: 'We are golfers first. This bay exists because we wanted one in our own neighborhood.' },
+  { icon: Users, title: 'Bridgeland Community', desc: 'Built for our neighbors — raising the game for every golfer from Bridgeland to Cypress.' },
+  { icon: Trophy, title: 'Compete & Grow', desc: 'Monthly tournaments, skill leagues, and Bridgeland-wide challenges to push each other.' },
   { icon: Clock, title: '24/7 Your Schedule', desc: 'No tee times, no waiting. Practice at midnight or 6am — we never close.' },
 ];
 
@@ -18,20 +18,22 @@ export default function OurStory() {
           <div>
             <p className="text-primary font-semibold text-sm tracking-widest uppercase">Our Story</p>
             <h2 className="mt-3 text-3xl lg:text-4xl font-bold text-primary-dark tracking-tight leading-tight">
-              Built by Golfers,<br />for Golfers.
+              Built in Bridgeland,<br />for Bridgeland.
             </h2>
             <p className="mt-6 text-gray-text leading-relaxed">
-              BABYDRAW GOLF started with a simple frustration: there was nowhere in Cypress to practice with tour-level
-              technology without driving 30 minutes or waiting for a crowded bay. So we built our own.
+              We live in Bridgeland. We love golf. And we were frustrated — the nearest quality
+              simulator was a 30-minute drive, always crowded, always on someone else&apos;s schedule.
+              So we built BABYDRAW GOLF right here in our own community.
             </p>
             <p className="mt-4 text-gray-text leading-relaxed">
-              But this is bigger than one bay. We want to raise the level of golf in Cypress. That means
-              building a community — hosting monthly tournaments, running skill-building leagues, and giving
-              every golfer in the area access to the same Trackman iO technology the pros use.
+              But this is about more than convenience. We want to raise the level of golf across
+              Bridgeland and Cypress. That means building a real community around the game —
+              hosting monthly tournaments, organizing neighborhood leagues, and making sure every
+              golfer here has access to the same Trackman iO technology the PGA Tour pros use.
             </p>
             <p className="mt-4 text-primary-dark font-medium">
-              Whether you are picking up a club for the first time or chasing a single-digit handicap,
-              this is your space. Come practice, compete, and grow with us.
+              Whether you are picking up a club for the first time or grinding to break 80,
+              this is your home course. Come practice, compete, and grow with your neighbors.
             </p>
           </div>
 
