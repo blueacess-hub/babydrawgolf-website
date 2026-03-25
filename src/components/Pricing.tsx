@@ -1,6 +1,6 @@
 'use client';
 
-import { Check, Moon, Star, Users } from 'lucide-react';
+import { Check, Moon, Star, Users, Golf } from 'lucide-react';
 import pricingData from '@/data/pricing.json';
 
 const memberships = [
@@ -44,12 +44,16 @@ export default function Pricing() {
             </div>
             <div className="mt-2 md:mt-4 bg-alt-bg rounded-lg p-2.5 md:p-4">
               <div className="grid grid-cols-2 gap-1">
-                {['Trackman iO simulator', '200+ courses', 'Swing analytics', 'Clubs on-site'].map((f) => (
+                {['Trackman iO simulator', '200+ courses', 'Swing analytics', 'BYOB welcome'].map((f) => (
                   <div key={f} className="flex items-center gap-1">
                     <Check className="w-3 h-3 text-primary" />
                     <span className="text-[10px] md:text-xs text-primary-dark">{f}</span>
                   </div>
                 ))}
+              </div>
+              <div className="mt-1.5 flex items-center gap-1.5 pt-1 border-t border-gray-200">
+                <span className="text-[10px] md:text-xs text-gray-text">🏌️ Bring your own clubs or rent ours:</span>
+                <span className="text-[10px] md:text-xs font-bold text-primary-dark">$25/person</span>
               </div>
             </div>
           </div>
