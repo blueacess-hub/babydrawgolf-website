@@ -51,8 +51,21 @@ body {
   flex-shrink: 0;
 }
 
+/* Show a subtle scrollbar on desktop when card overflows */
+@media (min-width: 768px) {
+  .section-card::-webkit-scrollbar {
+    width: 4px;
+  }
+  .section-card::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.15);
+    border-radius: 2px;
+  }
+}
+
 /* Mobile: hide scrollbar inside cards */
-.section-card::-webkit-scrollbar {
-  width: 0;
-  display: none;
+@media (max-width: 767px) {
+  .section-card::-webkit-scrollbar {
+    width: 0;
+    display: none;
+  }
 }
