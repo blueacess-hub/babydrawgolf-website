@@ -1,43 +1,43 @@
 [
   {
-    "tier": "Single Session",
-    "duration": "1 hour",
-    "price": "$XX",
+    "tier": "Off-Peak",
+    "duration": "Mon-Fri before 3pm",
+    "price": "$35",
     "unit": "/hr",
-    "description": "Perfect for casual players or trying it out",
+    "description": "Early bird & daytime sessions at the best rate",
     "features": [
       "Full Trackman iO simulator access",
       "200+ virtual courses",
       "Swing analytics dashboard",
-      "Clubs provided"
+      "Clubs available on-site"
     ],
     "highlighted": false
   },
   {
-    "tier": "Extended Play",
-    "duration": "2 hours",
-    "price": "$XX",
-    "unit": "/2hr",
-    "description": "Ideal for serious practice sessions",
+    "tier": "Standard",
+    "duration": "Weekday evenings",
+    "price": "$50",
+    "unit": "/hr",
+    "description": "After-work sessions, Mon–Thu 3pm–9pm",
     "features": [
-      "Everything in Single Session",
-      "Extended practice time",
-      "Save & compare session data",
-      "Best value per hour"
+      "Full Trackman iO simulator access",
+      "200+ virtual courses",
+      "Swing analytics dashboard",
+      "Clubs available on-site"
     ],
     "highlighted": true
   },
   {
-    "tier": "Monthly Member",
-    "duration": "Unlimited*",
-    "price": "$XXX",
-    "unit": "/mo",
-    "description": "For frequent players who want unlimited access",
+    "tier": "Peak",
+    "duration": "Fri eve & Weekends",
+    "price": "$55",
+    "unit": "/hr",
+    "description": "Fri 3pm–midnight & Sat–Sun 8am–9pm",
     "features": [
-      "Unlimited simulator time",
-      "Priority booking",
-      "Member-only time slots",
-      "Bring a guest free once/month"
+      "Full Trackman iO simulator access",
+      "200+ virtual courses",
+      "Swing analytics dashboard",
+      "Clubs available on-site"
     ],
     "highlighted": false
   }
