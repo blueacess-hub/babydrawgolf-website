@@ -1,6 +1,6 @@
 'use client';
 
-import { Check, Moon, Star, Users, Golf } from 'lucide-react';
+import { Check, Moon, Star, Users } from 'lucide-react';
 import pricingData from '@/data/pricing.json';
 
 const memberships = [
