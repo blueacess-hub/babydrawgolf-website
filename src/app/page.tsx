@@ -9,6 +9,7 @@ import Simulator from '@/components/Simulator';
 import Pricing from '@/components/Pricing';
 import HowItWorks from '@/components/HowItWorks';
 import Location from '@/components/Location';
+import ChatButton from '@/components/ChatButton';
 
 const sections = [
   { id: 'hero', label: 'Home' },
@@ -98,6 +99,8 @@ export default function Home() {
           <button key={s.id} onClick={() => scrollToIndex(i)} className={`transition-all duration-300 rounded-full cursor-pointer ${i === activeIndex ? 'w-5 md:w-7 h-1.5 md:h-2 bg-white' : 'w-1.5 md:w-2 h-1.5 md:h-2 bg-white/40 hover:bg-white/70'}`} aria-label={s.label} />
         ))}
       </div>
+
+      <ChatButton />
     </>
   );
 }
