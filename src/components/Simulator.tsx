@@ -21,6 +21,7 @@ export default function Simulator() {
               src="https://images.unsplash.com/photo-1763117700007-a3133c847946?w=1200&q=80"
               alt="Golf simulator with Trackman technology"
               className="w-full h-full object-cover"
+              loading="eager"
             />
           </div>
 

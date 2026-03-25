@@ -5,12 +5,12 @@ import BookNowButton from './BookNowButton';
 export default function Hero() {
   return (
     <section className="relative h-full flex items-center justify-center overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage:
-            "url('https://images.pexels.com/photos/31212256/pexels-photo-31212256.jpeg?auto=compress&cs=tinysrgb&w=1920')",
-        }}
+      {/* Background image as <img> for better mobile compatibility */}
+      <img
+        src="https://images.pexels.com/photos/31212256/pexels-photo-31212256.jpeg?auto=compress&cs=tinysrgb&w=1920"
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover"
+        loading="eager"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
 
