@@ -6,7 +6,7 @@ import pricingData from '@/data/pricing.json';
 const memberships = [
   { tier: 'Birdie', price: '$99', unit: '/mo', hours: '8 hrs/month', extra: '$30/hr additional', highlighted: false },
   { tier: 'Eagle', price: '$179', unit: '/mo', hours: '20 hrs/month', extra: '$25/hr additional', highlighted: true },
-  { tier: 'Ace', price: '$249', unit: '/mo', hours: 'Unlimited', extra: '1 free guest hr/mo', highlighted: false },
+  { tier: 'Ace', price: '$249', unit: '/mo', hours: 'Unlimited hours', extra: 'Free guests anytime', highlighted: false },
 ];
 
 export default function Pricing() {
