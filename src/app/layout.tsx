@@ -110,7 +110,7 @@ export default function RootLayout({
       <head>
         <StructuredData />
       </head>
-      <body className="min-h-full flex flex-col font-sans">
+      <body className="h-full overflow-hidden font-sans">
         {children}
 
         {/* Google Analytics 4 */}

@@ -12,10 +12,53 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+  overflow: hidden;
+  height: 100%;
 }
 
 body {
   color: var(--color-dark-text);
   font-family: var(--font-sans);
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Horizontal scroll container */
+.horizontal-scroll {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  height: 100vh;
+  -webkit-overflow-scrolling: touch;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.horizontal-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Each section card */
+.section-card {
+  min-width: 100vw;
+  width: 100vw;
+  height: 100vh;
+  scroll-snap-align: start;
+  overflow-y: auto;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Hide scrollbar inside cards too */
+.section-card::-webkit-scrollbar {
+  width: 4px;
+}
+.section-card::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15);
+  border-radius: 4px;
 }
