@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-haiku-4-20250414',
         max_tokens: 400,
         system: SYSTEM_PROMPT,
         messages,
@@ -108,8 +108,8 @@ export async function POST(req: NextRequest) {
     const data = await resp.json();
     const reply = data.content?.[0]?.text || "Sorry, I couldn't process that. Please try again!";
 
-    // Fire-and-forget Telegram notification
-    notifyOwner(message, reply, sessionId || 'unknown');
+    // Notify owner via Telegram (must await before returning, Vercel kills process after response)
+    await notifyOwner(message, reply, sessionId || 'unknown');
 
     return NextResponse.json({ reply });
   } catch {
