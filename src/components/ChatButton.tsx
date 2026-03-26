@@ -134,7 +134,16 @@ export default function ChatButton() {
                         : 'bg-white text-primary-dark rounded-bl-none shadow-sm'
                     }`}
                   >
-                    {msg.content}
+                    {msg.content.split('\n').map((line, j) => (
+                      <span key={j}>
+                        {line.split(/(\*\*.*?\*\*)/).map((part, k) =>
+                          part.startsWith('**') && part.endsWith('**')
+                            ? <strong key={k}>{part.slice(2, -2)}</strong>
+                            : part
+                        )}
+                        {j < msg.content.split('\n').length - 1 && <br />}
+                      </span>
+                    ))}
                   </div>
                 </div>
               ))}
