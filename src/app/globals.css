@@ -47,12 +47,32 @@ body {
   height: 100vh;
   scroll-snap-align: start;
   overflow-y: auto;
+  overflow-x: hidden;
   position: relative;
   flex-shrink: 0;
+  /* Prevent vertical scroll from chaining to horizontal scroll */
+  overscroll-behavior-y: contain;
+  /* Bottom padding so content isn't hidden behind dots/chat button */
+  padding-bottom: 60px;
+}
+
+/* Hero card doesn't need bottom padding */
+.section-card:first-child {
+  padding-bottom: 0;
+}
+
+/* Smooth momentum scrolling on iOS */
+@supports (-webkit-touch-callout: none) {
+  .section-card {
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /* Show a subtle scrollbar on desktop when card overflows */
 @media (min-width: 768px) {
+  .section-card {
+    padding-bottom: 40px;
+  }
   .section-card::-webkit-scrollbar {
     width: 4px;
   }
@@ -62,7 +82,7 @@ body {
   }
 }
 
-/* Mobile: hide scrollbar inside cards */
+/* Mobile: hide scrollbar */
 @media (max-width: 767px) {
   .section-card::-webkit-scrollbar {
     width: 0;
