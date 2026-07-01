@@ -78,7 +78,7 @@ export default function ChatButton() {
           <div className="absolute inset-0 bg-black/20 md:bg-transparent" onClick={() => setOpen(false)} />
 
           {/* Chat window */}
-          <div className="relative w-full md:w-[380px] h-[70vh] md:h-[500px] md:max-h-[70vh] md:mr-6 md:mb-20 flex flex-col bg-white md:rounded-2xl shadow-2xl md:border md:border-gray-200 overflow-hidden">
+          <div className="relative w-full md:w-[380px] h-[70svh] md:h-[500px] md:max-h-[70svh] md:mr-6 md:mb-20 flex flex-col bg-white md:rounded-2xl shadow-2xl md:border md:border-gray-200 overflow-hidden">
             {/* Header */}
             <div className="bg-primary-dark px-4 py-3 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
@@ -165,7 +165,7 @@ export default function ChatButton() {
             </div>
 
             {/* Input area */}
-            <div className="border-t border-gray-200 px-3 py-2 bg-white shrink-0">
+            <div className="border-t border-gray-200 px-3 pt-2 pb-[calc(0.5rem_+_env(safe-area-inset-bottom))] bg-white shrink-0">
               <form
                 onSubmit={(e) => { e.preventDefault(); sendMessage(input); }}
                 className="flex items-center gap-2"
@@ -195,7 +195,7 @@ export default function ChatButton() {
       {/* Floating chat button */}
       <button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-3 right-4 md:bottom-6 md:right-6 z-[70] w-12 h-12 md:w-14 md:h-14 bg-primary text-white rounded-full shadow-xl hover:bg-accent hover:scale-105 transition-all flex items-center justify-center cursor-pointer"
+        className="fixed-bottom-safe fixed right-4 md:right-6 z-[70] w-12 h-12 md:w-14 md:h-14 bg-primary text-white rounded-full shadow-xl hover:bg-accent hover:scale-105 transition-all flex items-center justify-center cursor-pointer"
         aria-label="Chat with us"
       >
         {open ? (

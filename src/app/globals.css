@@ -30,7 +30,8 @@ body {
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
-  height: 100vh;
+  height: 100vh; /* fallback for browsers without svh */
+  height: 100svh; /* small viewport height: excludes mobile browser chrome so bottom is never covered */
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -44,7 +45,8 @@ body {
 .section-card {
   min-width: 100vw;
   width: 100vw;
-  height: 100vh;
+  height: 100vh; /* fallback for browsers without svh */
+  height: 100svh; /* match container: exclude mobile browser chrome */
   scroll-snap-align: start;
   overflow-y: auto;
   overflow-x: hidden;
@@ -52,8 +54,9 @@ body {
   flex-shrink: 0;
   /* Prevent vertical scroll from chaining to horizontal scroll */
   overscroll-behavior-y: contain;
-  /* Bottom padding so content isn't hidden behind dots/chat button */
-  padding-bottom: 60px;
+  /* Bottom padding so content isn't hidden behind dots/chat button; add
+     safe-area inset so the last line clears the iOS home indicator too */
+  padding-bottom: calc(60px + env(safe-area-inset-bottom));
 }
 
 /* Hero card doesn't need bottom padding */
@@ -71,7 +74,7 @@ body {
 /* Show a subtle scrollbar on desktop when card overflows */
 @media (min-width: 768px) {
   .section-card {
-    padding-bottom: 40px;
+    padding-bottom: calc(40px + env(safe-area-inset-bottom));
   }
   .section-card::-webkit-scrollbar {
     width: 4px;
@@ -87,5 +90,16 @@ body {
   .section-card::-webkit-scrollbar {
     width: 0;
     display: none;
+  }
+}
+
+/* Fixed bottom UI (dot nav, chat button): lift above the iOS home indicator.
+   env() resolves to 0px on desktop / non-notched devices, so this is a no-op there. */
+.fixed-bottom-safe {
+  bottom: calc(0.75rem + env(safe-area-inset-bottom));
+}
+@media (min-width: 768px) {
+  .fixed-bottom-safe {
+    bottom: calc(1.5rem + env(safe-area-inset-bottom));
   }
 }

@@ -94,7 +94,7 @@ export default function Home() {
       </button>
 
       {/* Dot indicators */}
-      <div className="fixed bottom-3 md:bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-1.5 md:gap-2 bg-black/20 backdrop-blur-sm rounded-full px-2 md:px-3 py-1">
+      <div className="fixed-bottom-safe fixed left-1/2 -translate-x-1/2 z-40 flex items-center gap-1.5 md:gap-2 bg-black/20 backdrop-blur-sm rounded-full px-2 md:px-3 py-1">
         {sections.map((s, i) => (
           <button key={s.id} onClick={() => scrollToIndex(i)} className={`transition-all duration-300 rounded-full cursor-pointer ${i === activeIndex ? 'w-5 md:w-7 h-1.5 md:h-2 bg-white' : 'w-1.5 md:w-2 h-1.5 md:h-2 bg-white/40 hover:bg-white/70'}`} aria-label={s.label} />
         ))}
