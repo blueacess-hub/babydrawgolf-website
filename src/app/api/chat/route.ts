@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY || '';
+// Moonshot AI (Kimi) — OpenAI-compatible chat completions API.
+// Register at platform.moonshot.ai (international) or platform.moonshot.cn
+// (China); if the key is from the .cn platform, set MOONSHOT_BASE_URL to
+// https://api.moonshot.cn/v1
+const MOONSHOT_API_KEY = process.env.MOONSHOT_API_KEY || '';
+const MOONSHOT_BASE_URL = process.env.MOONSHOT_BASE_URL || 'https://api.moonshot.ai/v1';
+const MOONSHOT_MODEL = process.env.MOONSHOT_MODEL || 'moonshot-v1-8k';
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '';
 const TELEGRAM_OWNER_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '';
 
@@ -76,14 +82,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid message' }, { status: 400 });
     }
 
-    if (!ANTHROPIC_API_KEY) {
+    if (!MOONSHOT_API_KEY) {
       // Fallback when no API key
       const fallback = "Thanks for reaching out! 🏌️ We're setting up our chat system. Please email info@babydrawgolf.net and we'll get back to you shortly!";
       return NextResponse.json({ reply: fallback });
     }
 
-    // Build messages from history
-    const messages: Array<{ role: string; content: string }> = [];
+    // OpenAI-compatible message array: system prompt first, then history
+    const messages: Array<{ role: string; content: string }> = [
+      { role: 'system', content: SYSTEM_PROMPT },
+    ];
     if (Array.isArray(history)) {
       for (const h of history.slice(-10)) { // Keep last 10 messages for context
         if (h.role && h.content) {
@@ -93,33 +101,29 @@ export async function POST(req: NextRequest) {
     }
     messages.push({ role: 'user', content: message });
 
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    const resp = await fetch(`${MOONSHOT_BASE_URL}/chat/completions`, {
       method: 'POST',
       headers: {
-        'x-api-key': ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
+        'Authorization': `Bearer ${MOONSHOT_API_KEY}`,
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        // claude-sonnet-4 retired 2026-06-15; Sonnet 5 is the drop-in successor.
-        // Thinking off: FAQ answers don't need it and it adds latency + tokens.
-        model: 'claude-sonnet-5',
+        model: MOONSHOT_MODEL,
         max_tokens: 400,
-        thinking: { type: 'disabled' },
-        system: SYSTEM_PROMPT,
+        temperature: 0.3,
         messages,
       }),
     });
 
     if (!resp.ok) {
       const errBody = await resp.text().catch(() => '(unreadable)');
-      console.error(`[chat] Anthropic API ${resp.status}: ${errBody.slice(0, 500)}`);
+      console.error(`[chat] Moonshot API ${resp.status}: ${errBody.slice(0, 500)}`);
       const fallback = "I'm having a brief technical issue. Please email info@babydrawgolf.net for a quick response! 🏌️";
       return NextResponse.json({ reply: fallback });
     }
 
     const data = await resp.json();
-    const reply = data.content?.[0]?.text || "Sorry, I couldn't process that. Please try again!";
+    const reply = data.choices?.[0]?.message?.content || "Sorry, I couldn't process that. Please try again!";
 
     // Notify owner via Telegram (must await before returning, Vercel kills process after response)
     await notifyOwner(message, reply, sessionId || 'unknown');
