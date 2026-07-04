@@ -140,19 +140,6 @@ export default function Home() {
 
       <Navbar activeSection={sections[activeIndex]?.id} />
 
-      {/* Broadcast timeline — deck progress hairline */}
-      <div className="fixed top-0 left-0 right-0 h-[2px] z-[55] pointer-events-none" aria-hidden="true">
-        <div
-          className="h-full origin-left transition-transform duration-500"
-          style={{
-            transform: `scaleX(${(activeIndex + 1) / sections.length})`,
-            background: 'linear-gradient(90deg, #2FD68C, #45F0A6)',
-            transitionTimingFunction: 'var(--ease-hud)',
-            boxShadow: '0 0 8px rgba(69,240,166,.5)',
-          }}
-        />
-      </div>
-
       <div ref={scrollRef} className="horizontal-scroll">
         {cards.map((card, i) => (
           <div

@@ -5,9 +5,9 @@ import pricingData from '@/data/pricing.json';
 import BookNowButton from './BookNowButton';
 
 const memberships = [
-  { tier: 'Birdie', price: '$99', unit: '/mo', hours: '8 hrs/month', extra: '$30/hr additional', highlighted: false },
-  { tier: 'Eagle', price: '$179', unit: '/mo', hours: '15 hrs/month', extra: '$30/hr additional', highlighted: true },
-  { tier: 'Ace', price: '$249', unit: '/mo', hours: 'Unlimited · 3-hr sessions', extra: 'Limited to 15 members', highlighted: false },
+  { tier: 'Birdie', price: '$99', unit: '/mo', hours: '8 hrs/month', extra: '$30/hr additional', highlighted: false, lux: false },
+  { tier: 'Eagle', price: '$179', unit: '/mo', hours: '15 hrs/month', extra: '$30/hr additional', highlighted: true, lux: false },
+  { tier: 'Ace', price: '$249', unit: '/mo', hours: 'Unlimited · 3-hr sessions', extra: 'Free guests anytime', highlighted: false, lux: true },
 ];
 
 const included = ['Trackman iO simulator', '200+ courses', 'Swing analytics', 'BYOB welcome'];
@@ -137,18 +137,23 @@ export default function Pricing() {
               {memberships.map((m, i) => (
                 <div
                   key={m.tier}
-                  className={`${m.highlighted ? 'conic-ring' : ''} sheen-host bg-carbon-2 border border-line rounded-card px-4 md:px-6 py-3.5 md:py-4 transition-all duration-500 hover:-translate-y-1 hover:border-[rgba(69,240,166,.4)]`}
+                  className={`${m.highlighted || m.lux ? 'conic-ring' : ''} ${m.lux ? 'ring-lux' : ''} sheen-host bg-carbon-2 border border-line rounded-card px-4 md:px-6 py-3.5 md:py-4 transition-all duration-500 hover:-translate-y-1 ${m.lux ? 'hover:border-[rgba(230,201,126,.5)]' : 'hover:border-[rgba(69,240,166,.4)]'}`}
                   data-reveal
                   style={{ '--i': i + 2 } as React.CSSProperties}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
-                      <span className="font-display font-semibold uppercase tracking-wide text-trace-soft text-lg md:text-[22px]">
+                      <span className={`font-display font-semibold uppercase tracking-wide text-lg md:text-[22px] ${m.lux ? 'tier-lux' : 'text-trace-soft'}`}>
                         {m.tier}
                       </span>
                       {m.highlighted && (
                         <span className="font-data text-[9px] md:text-[10px] font-medium tracking-[.12em] text-trace border border-[rgba(69,240,166,.35)] rounded px-2 py-0.5 uppercase">
                           Best Value
+                        </span>
+                      )}
+                      {m.lux && (
+                        <span className="font-data text-[9px] md:text-[10px] font-medium tracking-[.12em] text-[#E6C97E] border border-[rgba(230,201,126,.4)] rounded px-2 py-0.5 uppercase">
+                          15 Members Only
                         </span>
                       )}
                     </div>

@@ -458,6 +458,17 @@ html[data-reveal-all] .tracer-scene .tracer-apex {
   animation-play-state: paused;
 }
 
+/* Champagne variant — the prestige tier ring (Ace) */
+.ring-lux::before {
+  background: conic-gradient(from var(--angle), rgba(230, 201, 126, .85), rgba(230, 201, 126, .08) 40%, rgba(245, 235, 215, .45) 70%, rgba(230, 201, 126, .85));
+}
+.tier-lux {
+  background: linear-gradient(92deg, #E6C97E 10%, #F5EBD7 55%, #E6C97E 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 /* Divider sweep: glint traveling a hairline under headings on reveal */
 .line-light {
   position: relative;
