@@ -20,10 +20,11 @@
   --color-brand-deep: #1B4332;
   --color-brand-mid: #2D6A4F;
 
-  /* Ink */
-  --color-ink: #EDF6F0;
-  --color-ink-body: #C7D6CD;
-  --color-ink-mute: #8FA398;
+  /* Ink — lifted 2026-07-04: muted grays read too dim on low-brightness
+     phone screens; keep body/mute hierarchy but raise both. */
+  --color-ink: #F0F8F3;
+  --color-ink-body: #D8E5DE;
+  --color-ink-mute: #AABFB3;
   --color-rec: #FF5C5C;
 
   /* Legacy aliases — keep unused legacy components compiling */
@@ -32,7 +33,7 @@
   --color-primary-light: #7DF5BF;
   --color-accent: #2FD68C;
   --color-dark-text: #EDF6F0;
-  --color-gray-text: #8FA398;
+  --color-gray-text: #AABFB3;
   --color-alt-bg: #111613;
 
   --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;

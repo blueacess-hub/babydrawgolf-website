@@ -9,7 +9,6 @@
  */
 
 const DESKTOP_PATH = 'M120 640 C 480 40, 980 -20, 1290 330';
-const MOBILE_PATH = 'M40 700 C 140 260, 260 180, 350 420';
 
 function Arc({ viewBox, d, apex, landing, className, idSuffix, showApexLabel = true, glow = true }: {
   viewBox: string;
@@ -114,25 +113,17 @@ function Arc({ viewBox, d, apex, landing, className, idSuffix, showApexLabel = t
 }
 
 export default function TracerArc() {
+  // Desktop-only by owner decision (2026-07-04): the arc reads poorly on
+  // small screens, so mobile hero keeps photo + HUD strip only.
   return (
-    <div className="tracer-scene absolute inset-0 pointer-events-none z-[2]" aria-hidden="true">
+    <div className="tracer-scene absolute inset-0 pointer-events-none z-[2] hidden md:block" aria-hidden="true">
       <Arc
         viewBox="0 0 1440 700"
         d={DESKTOP_PATH}
         apex={{ x: 740, y: 118 }}
         landing={{ x: 1290, y: 330 }}
-        className="hidden md:block"
+        className=""
         idSuffix="d"
-      />
-      <Arc
-        viewBox="0 0 390 844"
-        d={MOBILE_PATH}
-        apex={{ x: 205, y: 320 }}
-        landing={{ x: 350, y: 420 }}
-        className="md:hidden"
-        idSuffix="m"
-        showApexLabel={false}
-        glow={false}
       />
     </div>
   );
