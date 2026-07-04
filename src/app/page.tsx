@@ -107,6 +107,9 @@ export default function Home() {
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
+      // Never steal arrow keys from form fields (e.g. the chat input)
+      const t = e.target as HTMLElement | null;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
       if (e.key === 'ArrowRight') {
         setActiveIndex((prev) => { const n = Math.min(prev + 1, sections.length - 1); scrollToIndex(n); markVisited(n); return n; });
       } else if (e.key === 'ArrowLeft') {

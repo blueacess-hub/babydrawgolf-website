@@ -423,6 +423,20 @@ html[data-reveal-all] .tracer-scene .tracer-apex {
   0%, 100% { transform: translateX(0); }
   50% { transform: translateX(6px); }
 }
+@keyframes chatPanelIn {
+  from { opacity: 0; transform: translateY(24px) scale(.98); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Chat bottom-sheet height: dvh tracks the iOS keyboard (svh fallback) */
+.chat-sheet-h {
+  height: 82svh;
+  height: 82dvh;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
 /* Animated conic border (featured membership) */
 @property --angle {
