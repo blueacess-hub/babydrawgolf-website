@@ -112,6 +112,8 @@ export async function POST(req: NextRequest) {
     });
 
     if (!resp.ok) {
+      const errBody = await resp.text().catch(() => '(unreadable)');
+      console.error(`[chat] Anthropic API ${resp.status}: ${errBody.slice(0, 500)}`);
       const fallback = "I'm having a brief technical issue. Please email info@babydrawgolf.net for a quick response! 🏌️";
       return NextResponse.json({ reply: fallback });
     }
