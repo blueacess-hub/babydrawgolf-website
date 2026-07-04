@@ -13,9 +13,10 @@ function genSessionId() {
 }
 
 const quickReplies = [
+  '🚀 When do you open?',
   '📅 What are your prices?',
+  '⭐ What is Founding 25?',
   '🏌️ Do you have clubs to rent?',
-  '📍 Where are you located?',
   '🎉 Can I book for a group?',
 ];
 
