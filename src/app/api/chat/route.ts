@@ -83,6 +83,8 @@ export async function POST(req: NextRequest) {
     }
 
     if (!MOONSHOT_API_KEY) {
+      const moonKeys = Object.keys(process.env).filter((k) => k.toUpperCase().includes('MOON'));
+      console.error(`[chat] MOONSHOT_API_KEY missing. Moon-ish env keys present: ${JSON.stringify(moonKeys)}; len=${(process.env.MOONSHOT_API_KEY || '').length}`);
       // Fallback when no API key
       const fallback = "Thanks for reaching out! 🏌️ We're setting up our chat system. Please email info@babydrawgolf.net and we'll get back to you shortly!";
       return NextResponse.json({ reply: fallback });
