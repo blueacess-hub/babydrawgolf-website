@@ -71,7 +71,7 @@ export default function RadarSweep() {
           <div className="hud-chip px-3 py-2">
             <p className="font-data text-[9px] font-medium tracking-[.15em] text-ink-mute uppercase">Launch</p>
             <p className="font-data font-bold tabular-nums text-trace-soft text-lg leading-none mt-0.5">
-              12.8<span className="ml-0.5 text-[10px] font-medium text-ink-mute">°</span>
+              11.2<span className="ml-0.5 text-[10px] font-medium text-ink-mute">°</span>
             </p>
           </div>
         </div>

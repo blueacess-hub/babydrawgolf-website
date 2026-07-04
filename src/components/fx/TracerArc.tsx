@@ -9,6 +9,10 @@
  */
 
 const DESKTOP_PATH = 'M120 640 C 480 40, 980 -20, 1290 330';
+// Portrait path tuned for the phone hero: launches lower-left, apex in the
+// upper-middle air above the copy block, falls to the right edge with the
+// late leftward bend of a draw.
+const MOBILE_PATH = 'M26 632 C 120 300, 302 196, 358 372';
 
 function Arc({ viewBox, d, apex, landing, className, idSuffix, showApexLabel = true, glow = true }: {
   viewBox: string;
@@ -96,7 +100,7 @@ function Arc({ viewBox, d, apex, landing, className, idSuffix, showApexLabel = t
             letterSpacing="1.5"
             style={{ fontFamily: 'var(--font-data)' }}
           >
-            APEX 31 YD
+            APEX 38 YD
           </text>
         )}
       </g>
@@ -113,17 +117,27 @@ function Arc({ viewBox, d, apex, landing, className, idSuffix, showApexLabel = t
 }
 
 export default function TracerArc() {
-  // Desktop-only by owner decision (2026-07-04): the arc reads poorly on
-  // small screens, so mobile hero keeps photo + HUD strip only.
   return (
-    <div className="tracer-scene absolute inset-0 pointer-events-none z-[2] hidden md:block" aria-hidden="true">
+    <div className="tracer-scene absolute inset-0 pointer-events-none z-[2]" aria-hidden="true">
       <Arc
         viewBox="0 0 1440 700"
         d={DESKTOP_PATH}
         apex={{ x: 740, y: 118 }}
         landing={{ x: 1290, y: 330 }}
-        className=""
+        className="hidden md:block"
         idSuffix="d"
+      />
+      {/* Mobile: portrait arc, no feGaussianBlur (layered strokes carry the
+          glow — per-frame blur is too expensive on phone GPUs) */}
+      <Arc
+        viewBox="0 0 390 844"
+        d={MOBILE_PATH}
+        apex={{ x: 196, y: 288 }}
+        landing={{ x: 358, y: 372 }}
+        className="md:hidden"
+        idSuffix="m"
+        showApexLabel={false}
+        glow={false}
       />
     </div>
   );

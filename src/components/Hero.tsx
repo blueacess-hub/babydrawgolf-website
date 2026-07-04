@@ -47,7 +47,7 @@ export default function Hero({ active = true }: { active?: boolean }) {
       {/* Copy — bottom-left anchored by the section's justify-end */}
       <div className="relative z-10">
         <div
-          className="px-6 md:px-16 lg:px-24 max-w-3xl pb-[calc(108px+env(safe-area-inset-bottom))] md:pb-[calc(110px+env(safe-area-inset-bottom))]"
+          className="px-5 md:px-16 lg:px-24 max-w-3xl pb-[calc(88px+env(safe-area-inset-bottom))] md:pb-[calc(110px+env(safe-area-inset-bottom))]"
           data-reveal-group
         >
           {/* Broadcast eyebrow */}
@@ -73,7 +73,7 @@ export default function Hero({ active = true }: { active?: boolean }) {
           </div>
 
           <h1
-            className="mt-4 text-[clamp(2.75rem,8.5vw,6rem)]"
+            className="mt-3 md:mt-4 text-[clamp(2.3rem,10.5vw,3rem)] md:text-[clamp(2.75rem,8.5vw,6rem)]"
             data-reveal
             style={{ '--i': 1 } as React.CSSProperties}
           >
@@ -85,7 +85,7 @@ export default function Hero({ active = true }: { active?: boolean }) {
           </h1>
 
           <p
-            className="mt-5 text-[17px] md:text-lg text-ink-body max-w-[52ch] leading-relaxed"
+            className="mt-3 md:mt-5 text-[15px] md:text-lg text-ink-body max-w-[52ch] leading-relaxed"
             data-reveal
             style={{ '--i': 2 } as React.CSSProperties}
           >
@@ -93,26 +93,20 @@ export default function Hero({ active = true }: { active?: boolean }) {
             staff needed. Cypress, TX.
           </p>
 
-          <div className="mt-8" data-reveal style={{ '--i': 3 } as React.CSSProperties}>
+          <div className="mt-5 md:mt-8" data-reveal style={{ '--i': 3 } as React.CSSProperties}>
             <BookNowButton location="hero" size="lg" className="cta-launch cta-pulse" />
           </div>
 
-          {/* Mobile: one slim readout strip below the CTA (funnel stays clean) */}
-          <div key={`m-${launch}`} className="hud-seq mt-5 md:hidden" aria-hidden="true">
-            <div className="hud-stamp inline-flex items-center gap-2.5 hud-chip px-3 py-2 font-data text-[11px] tracking-[.08em]">
-              <span className="text-trace-soft font-bold tabular-nums">152.7 mph</span>
-              <span className="text-ink-mute">·</span>
-              <span className="text-trace-soft font-bold tabular-nums">246 yd</span>
-              <span className="text-ink-mute">·</span>
-              <span className="text-trace font-bold tracking-[.1em]">BABY DRAW</span>
-            </div>
+          {/* Mobile: full TrackMan readout grid below the CTA */}
+          <div key={`m-${launch}`} className="mt-4 md:hidden">
+            <HudReadout active={active} compact />
           </div>
         </div>
       </div>
 
       {/* Mobile swipe cue */}
       <div
-        className="md:hidden absolute right-5 bottom-[calc(78px+env(safe-area-inset-bottom))] z-10 font-data text-[10px] tracking-[.2em] text-ink-mute uppercase pointer-events-none"
+        className="md:hidden absolute right-4 bottom-[calc(27px+env(safe-area-inset-bottom))] z-10 font-data text-[10px] tracking-[.2em] text-ink-mute uppercase pointer-events-none"
         aria-hidden="true"
       >
         Swipe{' '}
