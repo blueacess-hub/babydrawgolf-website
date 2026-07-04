@@ -249,7 +249,7 @@ export default function Pricing() {
             >
               <Users className="w-4 h-4 text-trace mt-0.5 shrink-0" />
               <p className="text-xs md:text-[13px] text-ink-body leading-relaxed font-normal">
-                <strong className="text-ink">Bring friends!</strong> Members can bring up to 3 guests per session. Member must be present. All guests sign a waiver.
+                <strong className="text-ink">Bring friends!</strong> Every booking covers up to 4 players per bay — hourly and members alike (members: be present with your guests). All guests sign a waiver. Please keep your group to 4 so every player at the facility has a great experience.
               </p>
             </div>
             <p className="mt-2.5 text-[10px] md:text-[11px] text-ink-mute/80 text-center font-normal" data-reveal style={{ '--i': 5 } as React.CSSProperties}>

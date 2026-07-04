@@ -40,7 +40,8 @@ EQUIPMENT & HOUSE RULES:
 - Bring your own clubs, or rent a full set on-site: $25 per person
 - Golf shoes optional — athletic shoes are fine
 - BYOB welcome (no glass containers)
-- Up to 4 people per bay; members can bring up to 3 guests (member must be present); all guests sign a liability waiver
+- GUESTS: every booking covers up to 4 players per bay — hourly bookings AND memberships alike. Hourly customers are welcome to bring friends within the 4-player limit. Members can bring up to 3 guests and must be present with them. All guests sign a liability waiver.
+- Kindly ask groups not to bring extra people beyond their 4: it affects the experience of other players at the facility
 - Corporate events and birthday parties available — email us
 
 REPLY LOGIC:
@@ -100,8 +101,11 @@ export async function POST(req: NextRequest) {
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        // claude-sonnet-4 retired 2026-06-15; Sonnet 5 is the drop-in successor.
+        // Thinking off: FAQ answers don't need it and it adds latency + tokens.
+        model: 'claude-sonnet-5',
         max_tokens: 400,
+        thinking: { type: 'disabled' },
         system: SYSTEM_PROMPT,
         messages,
       }),
