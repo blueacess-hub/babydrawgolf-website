@@ -10,6 +10,7 @@ import Pricing from '@/components/Pricing';
 import HowItWorks from '@/components/HowItWorks';
 import Location from '@/components/Location';
 import ChatButton from '@/components/ChatButton';
+import FlightLineNav from '@/components/fx/FlightLineNav';
 
 const sections = [
   { id: 'hero', label: 'Home' },
@@ -23,6 +24,13 @@ const sections = [
 export default function Home() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  // One-way visited flags drive the reveal system (never unset). Written
+  // straight to the DOM — presentational only, no re-render needed.
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const markVisited = useCallback((i: number) => {
+    const el = cardsRef.current[i];
+    if (el && el.dataset.visited !== 'true') el.dataset.visited = 'true';
+  }, []);
 
   const scrollToIndex = useCallback((index: number) => {
     const el = scrollRef.current;
@@ -48,22 +56,66 @@ export default function Home() {
     const handleScroll = () => {
       const index = Math.round(container.scrollLeft / container.clientWidth);
       setActiveIndex(index);
+      markVisited(index);
+      // Drives the AuroraField parallax — direct style write, no re-render.
+      document.documentElement.style.setProperty('--deck-x', container.scrollLeft + 'px');
     };
     container.addEventListener('scroll', handleScroll, { passive: true });
     return () => container.removeEventListener('scroll', handleScroll);
+  }, [markVisited]);
+
+  // React is alive: disarm the inline-script dead-man floor (layout.tsx) —
+  // per-card reveals take over from here.
+  useEffect(() => {
+    const w = window as unknown as { __revealFloor?: number };
+    if (w.__revealFloor) clearTimeout(w.__revealFloor);
+    document.documentElement.removeAttribute('data-reveal-all');
+    markVisited(0);
+  }, [markVisited]);
+
+  // Reveal a card as soon as it starts entering the viewport during a swipe
+  // (the scroll handler's Math.round only flips at 50%) — and as a floor,
+  // whenever it becomes the active card.
+  useEffect(() => {
+    const root = scrollRef.current;
+    if (!root || typeof IntersectionObserver === 'undefined') return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) (e.target as HTMLElement).dataset.visited = 'true';
+        });
+      },
+      { root, threshold: 0.15 }
+    );
+    cardsRef.current.forEach((el) => el && io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    markVisited(activeIndex);
+  }, [activeIndex, markVisited]);
+
+  // Pointer lightfield vars (desktop garnish; .lightfield is display:none on touch)
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      document.documentElement.style.setProperty('--lx', ((e.clientX / window.innerWidth) * 100).toFixed(1) + '%');
+      document.documentElement.style.setProperty('--ly', ((e.clientY / window.innerHeight) * 100).toFixed(1) + '%');
+    };
+    window.addEventListener('pointermove', onMove, { passive: true });
+    return () => window.removeEventListener('pointermove', onMove);
   }, []);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') {
-        setActiveIndex((prev) => { const n = Math.min(prev + 1, sections.length - 1); scrollToIndex(n); return n; });
+        setActiveIndex((prev) => { const n = Math.min(prev + 1, sections.length - 1); scrollToIndex(n); markVisited(n); return n; });
       } else if (e.key === 'ArrowLeft') {
-        setActiveIndex((prev) => { const n = Math.max(prev - 1, 0); scrollToIndex(n); return n; });
+        setActiveIndex((prev) => { const n = Math.max(prev - 1, 0); scrollToIndex(n); markVisited(n); return n; });
       }
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [scrollToIndex]);
+  }, [scrollToIndex, markVisited]);
 
   useEffect(() => {
     (window as unknown as Record<string, unknown>).__scrollToSection = (id: string) => {
@@ -72,35 +124,78 @@ export default function Home() {
     };
   }, [scrollToIndex]);
 
+  const cards = [
+    <Hero key="hero" active={activeIndex === 0} />,
+    <OurStory key="our-story" />,
+    <Simulator key="simulator" />,
+    <Pricing key="pricing" />,
+    <HowItWorks key="how-it-works" active={activeIndex === 4} />,
+    <Location key="location" />,
+  ];
+
   return (
     <>
+      {/* Continuity light field behind the whole deck */}
+      <div className="aurora-field" aria-hidden="true" />
+
       <Navbar activeSection={sections[activeIndex]?.id} />
 
-      <div ref={scrollRef} className="horizontal-scroll">
-        <div className="section-card"><Hero /></div>
-        <div className="section-card"><OurStory /></div>
-        <div className="section-card"><Simulator /></div>
-        <div className="section-card"><Pricing /></div>
-        <div className="section-card"><HowItWorks /></div>
-        <div className="section-card"><Location /></div>
+      {/* Broadcast timeline — deck progress hairline */}
+      <div className="fixed top-0 left-0 right-0 h-[2px] z-[55] pointer-events-none" aria-hidden="true">
+        <div
+          className="h-full origin-left transition-transform duration-500"
+          style={{
+            transform: `scaleX(${(activeIndex + 1) / sections.length})`,
+            background: 'linear-gradient(90deg, #2FD68C, #45F0A6)',
+            transitionTimingFunction: 'var(--ease-hud)',
+            boxShadow: '0 0 8px rgba(69,240,166,.5)',
+          }}
+        />
       </div>
 
-      {/* Arrows — hidden on mobile, shown on md+ */}
-      <button onClick={() => { if (!scrollRef.current) return; const w = scrollRef.current.clientWidth; const cur = Math.round(scrollRef.current.scrollLeft / w); if (cur > 0) scrollRef.current.scrollTo({ left: (cur - 1) * w, behavior: 'smooth' }); }} className={`hidden md:flex fixed left-4 top-1/2 -translate-y-1/2 z-40 w-10 h-10 bg-white/80 backdrop-blur rounded-full shadow-lg items-center justify-center hover:bg-white transition cursor-pointer ${activeIndex === 0 ? 'md:hidden' : ''}`} aria-label="Previous">
-        <ChevronLeft className="w-5 h-5 text-primary-dark" />
-      </button>
-      <button onClick={() => { if (!scrollRef.current) return; const w = scrollRef.current.clientWidth; const cur = Math.round(scrollRef.current.scrollLeft / w); if (cur < sections.length - 1) scrollRef.current.scrollTo({ left: (cur + 1) * w, behavior: 'smooth' }); }} className={`hidden md:flex fixed right-4 top-1/2 -translate-y-1/2 z-40 w-10 h-10 bg-white/80 backdrop-blur rounded-full shadow-lg items-center justify-center hover:bg-white transition cursor-pointer ${activeIndex >= sections.length - 1 ? 'md:hidden' : ''}`} aria-label="Next">
-        <ChevronRight className="w-5 h-5 text-primary-dark" />
-      </button>
-
-      {/* Dot indicators */}
-      <div className="fixed-bottom-safe fixed left-1/2 -translate-x-1/2 z-40 flex items-center gap-1.5 md:gap-2 bg-black/20 backdrop-blur-sm rounded-full px-2 md:px-3 py-1">
-        {sections.map((s, i) => (
-          <button key={s.id} onClick={() => scrollToIndex(i)} className={`transition-all duration-300 rounded-full cursor-pointer ${i === activeIndex ? 'w-5 md:w-7 h-1.5 md:h-2 bg-white' : 'w-1.5 md:w-2 h-1.5 md:h-2 bg-white/40 hover:bg-white/70'}`} aria-label={s.label} />
+      <div ref={scrollRef} className="horizontal-scroll">
+        {cards.map((card, i) => (
+          <div
+            key={sections[i].id}
+            ref={(el) => { cardsRef.current[i] = el; }}
+            className="section-card vignette"
+            data-active={i === activeIndex}
+            data-visited="false"
+          >
+            {i > 0 && <div className="room-dim" aria-hidden="true" />}
+            {card}
+          </div>
         ))}
       </div>
 
+      {/* Arrows — hidden on mobile, shown on md+ */}
+      <button
+        onClick={() => { if (!scrollRef.current) return; const w = scrollRef.current.clientWidth; const cur = Math.round(scrollRef.current.scrollLeft / w); if (cur > 0) scrollRef.current.scrollTo({ left: (cur - 1) * w, behavior: 'smooth' }); }}
+        className={`hidden md:flex fixed left-4 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full border border-[var(--hairline)] bg-[rgba(16,24,18,.6)] text-ink-mute hover:text-trace-soft hover:border-[rgba(69,240,166,.5)] hover:-translate-x-0.5 transition-all duration-300 items-center justify-center cursor-pointer ${activeIndex === 0 ? 'md:hidden' : ''}`}
+        aria-label="Previous"
+      >
+        <ChevronLeft className="w-5 h-5" />
+      </button>
+      <button
+        onClick={() => { if (!scrollRef.current) return; const w = scrollRef.current.clientWidth; const cur = Math.round(scrollRef.current.scrollLeft / w); if (cur < sections.length - 1) scrollRef.current.scrollTo({ left: (cur + 1) * w, behavior: 'smooth' }); }}
+        className={`hidden md:flex fixed right-4 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full border border-[var(--hairline)] bg-[rgba(16,24,18,.6)] text-ink-mute hover:text-trace-soft hover:border-[rgba(69,240,166,.5)] hover:translate-x-0.5 transition-all duration-300 items-center justify-center cursor-pointer ${activeIndex >= sections.length - 1 ? 'md:hidden' : ''}`}
+        aria-label="Next"
+      >
+        <ChevronRight className="w-5 h-5" />
+      </button>
+
+      {/* FlightLine — the deck is a golf shot */}
+      <FlightLineNav
+        sections={sections}
+        activeIndex={activeIndex}
+        onSelect={scrollToIndex}
+        scrollRef={scrollRef}
+      />
+
       <ChatButton />
+
+      {/* Film grain lens layer */}
+      <div className="grain" aria-hidden="true" />
     </>
   );
 }

@@ -1,14 +1,69 @@
 @import "tailwindcss";
 
-@theme inline {
-  --color-primary-dark: #1B4332;
-  --color-primary: #2D6A4F;
-  --color-primary-light: #D8F3DC;
-  --color-accent: #40916C;
-  --color-dark-text: #212529;
-  --color-gray-text: #6C757D;
-  --color-alt-bg: #F8F9FA;
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+/* =============================================================================
+ * BABYDRAW GOLF — "BROADCAST TRACER" design system
+ * Dark carbon bay lit by one neon-green shot tracer, instrument-grade HUD.
+ * ========================================================================== */
+
+@theme {
+  /* Carbon scale (green-cast near-blacks — never pure #000) */
+  --color-carbon-0: #070908;
+  --color-carbon-1: #0B0E0C;
+  --color-carbon-2: #111613;
+  --color-carbon-3: #1A211C;
+  --color-line: #26302A;
+
+  /* Tracer green system */
+  --color-trace: #45F0A6;
+  --color-trace-hover: #2FD68C;
+  --color-trace-soft: #7DF5BF;
+  --color-brand-deep: #1B4332;
+  --color-brand-mid: #2D6A4F;
+
+  /* Ink */
+  --color-ink: #EDF6F0;
+  --color-ink-body: #C7D6CD;
+  --color-ink-mute: #8FA398;
+  --color-rec: #FF5C5C;
+
+  /* Legacy aliases — keep unused legacy components compiling */
+  --color-primary-dark: #111613;
+  --color-primary: #45F0A6;
+  --color-primary-light: #7DF5BF;
+  --color-accent: #2FD68C;
+  --color-dark-text: #EDF6F0;
+  --color-gray-text: #8FA398;
+  --color-alt-bg: #111613;
+
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-oswald), 'Arial Narrow', sans-serif;
+  --font-data: var(--font-roboto-mono), ui-monospace, monospace;
+
+  --radius-btn: 6px;
+  --radius-card: 12px;
+  --radius-chip: 3px;
+
+  --ease-hud: cubic-bezier(.16, 1, .3, 1);
+  --ease-trace: cubic-bezier(.6, .05, .3, 1);
+}
+
+:root {
+  color-scheme: dark;
+  --hairline: rgba(213, 255, 229, .10);
+  --glow-text: 0 0 22px rgba(69, 240, 166, .40), 0 0 2px rgba(69, 240, 166, .55);
+  --glow-cta: 0 0 0 1px rgba(69, 240, 166, .35), 0 10px 34px -10px rgba(69, 240, 166, .40);
+  --shadow-card: 0 24px 60px -30px rgba(0, 0, 0, .85);
+  --scrim-hero: linear-gradient(180deg, rgba(11, 14, 12, 0) 25%, rgba(11, 14, 12, .72) 70%, rgba(11, 14, 12, .96) 100%);
+  --lx: 50%;
+  --ly: 40%;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --glow-cta: 0 6px 20px -8px rgba(69, 240, 166, .3);
+    /* Portrait crops put the bright sim screen mid-frame — darken harder */
+    --scrim-hero: linear-gradient(180deg, rgba(11, 14, 12, .45) 0%, rgba(11, 14, 12, .55) 45%, rgba(11, 14, 12, .85) 72%, rgba(11, 14, 12, .97) 100%);
+  }
 }
 
 html {
@@ -18,14 +73,41 @@ html {
 }
 
 body {
-  color: var(--color-dark-text);
+  background: var(--color-carbon-1);
+  color: var(--color-ink-body);
   font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: .01em;
+  -webkit-font-smoothing: antialiased;
   height: 100%;
   overflow: hidden;
 }
 
-/* Horizontal scroll container */
+::selection {
+  background: rgba(69, 240, 166, .25);
+  color: #EDF6F0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-trace);
+  outline-offset: 3px;
+}
+
+h1, h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: .95;
+  letter-spacing: 0;
+  color: var(--color-ink);
+}
+
+/* ============================= DECK MECHANICS =============================
+ * Load-bearing: 100svh, safe-area, overscroll fixes. Colors only may change. */
+
 .horizontal-scroll {
+  position: relative;
+  z-index: 1;
   display: flex;
   overflow-x: auto;
   overflow-y: hidden;
@@ -41,7 +123,6 @@ body {
   display: none;
 }
 
-/* Each section card */
 .section-card {
   min-width: 100vw;
   width: 100vw;
@@ -54,38 +135,34 @@ body {
   flex-shrink: 0;
   /* Prevent vertical scroll from chaining to horizontal scroll */
   overscroll-behavior-y: contain;
-  /* Bottom padding so content isn't hidden behind dots/chat button; add
+  /* Bottom padding so content isn't hidden behind FlightLine/chat; add
      safe-area inset so the last line clears the iOS home indicator too */
-  padding-bottom: calc(60px + env(safe-area-inset-bottom));
+  padding-bottom: calc(78px + env(safe-area-inset-bottom));
 }
 
-/* Hero card doesn't need bottom padding */
 .section-card:first-child {
   padding-bottom: 0;
 }
 
-/* Smooth momentum scrolling on iOS */
 @supports (-webkit-touch-callout: none) {
   .section-card {
     -webkit-overflow-scrolling: touch;
   }
 }
 
-/* Show a subtle scrollbar on desktop when card overflows */
 @media (min-width: 768px) {
   .section-card {
-    padding-bottom: calc(40px + env(safe-area-inset-bottom));
+    padding-bottom: calc(72px + env(safe-area-inset-bottom));
   }
   .section-card::-webkit-scrollbar {
     width: 4px;
   }
   .section-card::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,0.15);
+    background: rgba(213, 255, 229, .15);
     border-radius: 2px;
   }
 }
 
-/* Mobile: hide scrollbar */
 @media (max-width: 767px) {
   .section-card::-webkit-scrollbar {
     width: 0;
@@ -93,13 +170,432 @@ body {
   }
 }
 
-/* Fixed bottom UI (dot nav, chat button): lift above the iOS home indicator.
-   env() resolves to 0px on desktop / non-notched devices, so this is a no-op there. */
 .fixed-bottom-safe {
   bottom: calc(0.75rem + env(safe-area-inset-bottom));
 }
 @media (min-width: 768px) {
   .fixed-bottom-safe {
     bottom: calc(1.5rem + env(safe-area-inset-bottom));
+  }
+}
+
+/* ============================ ATMOSPHERE LAYERS =========================== */
+
+/* Continuity light field behind the whole deck — parallax at 0.12x of deck
+   scroll (5 extra viewports × .12 = 60vw = exactly the extra field width). */
+.aurora-field {
+  position: fixed;
+  inset: 0;
+  width: 160vw;
+  z-index: 0;
+  pointer-events: none;
+  will-change: transform;
+  transform: translateX(calc(var(--deck-x, 0px) * -0.12));
+  background:
+    radial-gradient(52vw 42vh at 12% 6%, rgba(45, 106, 79, .18), transparent 62%),
+    radial-gradient(64vw 50vh at 55% 100%, rgba(27, 67, 50, .40), transparent 66%),
+    radial-gradient(38vw 30vh at 88% 12%, rgba(69, 240, 166, .06), transparent 60%),
+    radial-gradient(46vw 36vh at 130% 80%, rgba(45, 106, 79, .16), transparent 62%),
+    linear-gradient(180deg, #0B0E0C, #080B09);
+}
+
+/* Film grain — fixed so it reads as lens, not texture, during deck panning.
+   Small intrinsic tile (140px, stitched) instead of a viewport-sized
+   feTurbulence raster: ~1/600th the paint cost on 3x phones.
+   z-58: above page chrome (navbar 50 / hairline 55), below chat (60/70). */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 58;
+  pointer-events: none;
+  opacity: .035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-repeat: repeat;
+  background-size: 140px 140px;
+}
+@media (max-width: 767px) {
+  .grain {
+    opacity: .025;
+    mix-blend-mode: normal;
+  }
+}
+
+/* Per-card vignette — each snap card becomes its own shot */
+.vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(120% 100% at 50% 50%, transparent 55%, rgba(7, 9, 8, .55));
+}
+
+/* Carbon weave texture (pure CSS) */
+.carbon-weave::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .5;
+  background-image:
+    linear-gradient(27deg, rgba(255, 255, 255, .022) 25%, transparent 25% 75%, rgba(255, 255, 255, .022) 75%),
+    linear-gradient(207deg, rgba(255, 255, 255, .022) 25%, transparent 25% 75%, rgba(255, 255, 255, .022) 75%);
+  background-size: 7px 7px;
+  background-position: 0 0, 3.5px 3.5px;
+}
+
+/* Room-dim: inactive cards sit in the dark; lights come on when you arrive.
+   Sticky so it cannot scroll away inside the card's own y-scroller. */
+.room-dim {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  margin-bottom: -100vh;
+  margin-bottom: -100svh;
+  z-index: 6;
+  pointer-events: none;
+  background: #070908;
+  opacity: .5;
+  transition: opacity .9s var(--ease-hud);
+}
+.section-card[data-active="true"] .room-dim {
+  opacity: 0;
+}
+
+/* Pointer lightfield — desktop garnish, vars written on <html> by one
+   passive pointermove listener */
+.lightfield {
+  display: none;
+}
+@media (pointer: fine) {
+  .lightfield {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(58vw 58vw at var(--lx) var(--ly), rgba(69, 240, 166, .06), transparent 62%);
+  }
+}
+
+/* Unifying image grade */
+.img-grade {
+  filter: brightness(.78) contrast(1.08) saturate(.85);
+}
+.img-grade-wrap {
+  position: relative;
+}
+.img-grade-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(11, 14, 12, .15), rgba(11, 14, 12, .5));
+}
+
+/* HUD chip primitive */
+.hud-chip {
+  border: 1px solid var(--hairline);
+  background: rgba(7, 9, 8, .55);
+  border-radius: 3px;
+}
+
+/* Dotted leader line (rate board rows) */
+.leader {
+  border-bottom: 1px dotted rgba(69, 240, 166, .35);
+}
+
+/* ============================== REVEAL SYSTEM =============================
+ * Hidden state exists ONLY under html[data-js] (attr set by the inline head
+ * script) — no-JS renders fully visible. data-visited is one-way (scroll
+ * handler + IntersectionObserver + activeIndex effect). data-reveal-all is a
+ * dead-man floor armed by the same inline script and disarmed by React on
+ * mount: it fires only if the bundle never hydrates. */
+
+html[data-js] .section-card [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+/* Reveal is a keyframe animation, NOT a transition — a transition here would
+   hijack the tiles' own hover transitions (unlayered author CSS beats
+   Tailwind's @layer utilities). */
+html[data-js] .section-card[data-visited="true"] [data-reveal] {
+  animation: revealUp .9s var(--ease-hud) both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+/* Dead-man floor (armed by the layout.tsx inline script, disarmed by React
+   on mount): if the bundle never runs, everything appears at 3s. */
+html[data-reveal-all] .section-card [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
+}
+html[data-reveal-all] .room-dim {
+  opacity: 0 !important;
+}
+html[data-reveal-all] .hud-seq .hud-chip,
+html[data-reveal-all] .hud-seq .hud-stamp,
+html[data-reveal-all] .tracer-scene .tracer-apex {
+  animation: none !important;
+  opacity: 1 !important;
+}
+
+/* Ambient animation gating — exactly one card animates at a time */
+.section-card[data-active="false"] .amb {
+  animation-play-state: paused !important;
+}
+
+/* ================================ KEYFRAMES =============================== */
+
+@keyframes traceDraw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes hudOn {
+  0% { opacity: 0; }
+  35% { opacity: .6; }
+  55% { opacity: .25; }
+  100% { opacity: 1; }
+}
+@keyframes ctaPulse {
+  0%, 100% { opacity: .15; transform: scale(1); }
+  50% { opacity: .4; transform: scale(1.06); }
+}
+@keyframes ctaBloom {
+  0% { box-shadow: 0 0 0 0 rgba(69, 240, 166, 0); }
+  40% { box-shadow: 0 0 0 3px rgba(69, 240, 166, .45), 0 0 44px 6px rgba(69, 240, 166, .5); }
+  100% { box-shadow: var(--glow-cta); }
+}
+@keyframes radarSpin {
+  to { transform: rotate(360deg); }
+}
+@keyframes kenburns {
+  from { transform: scale(1.005); }
+  to { transform: scale(1.06) translate(-1%, -.6%); }
+}
+@keyframes ledBreath {
+  0%, 100% { opacity: .5; }
+  50% { opacity: 1; }
+}
+@keyframes liveDot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .25; }
+}
+@keyframes pulseRing {
+  from { transform: scale(.3); opacity: .8; }
+  to { transform: scale(1.6); opacity: 0; }
+}
+@keyframes sheen {
+  from { transform: translateX(-130%) skewX(-18deg); }
+  to { transform: translateX(130%) skewX(-18deg); }
+}
+@keyframes coneBreath {
+  0%, 100% { opacity: .55; }
+  50% { opacity: 1; }
+}
+@keyframes flagWave {
+  0% { transform: rotate(0deg); }
+  40% { transform: rotate(14deg); }
+  70% { transform: rotate(-7deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes lineLight {
+  from { transform: translateX(-110%); }
+  to { transform: translateX(420%); }
+}
+@keyframes stampIn {
+  0% { opacity: 0; transform: scale(1.15); }
+  60% { opacity: 1; transform: scale(1); text-shadow: var(--glow-text); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes fadeUpIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes swipeNudge {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+}
+
+/* Animated conic border (featured membership) */
+@property --angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes spinAngle {
+  to { --angle: 360deg; }
+}
+.conic-ring {
+  position: relative;
+}
+.conic-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 1px;
+  pointer-events: none;
+  background: conic-gradient(from var(--angle), rgba(69, 240, 166, .7), rgba(69, 240, 166, .06) 40%, rgba(216, 243, 220, .3) 70%, rgba(69, 240, 166, .7));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: spinAngle 8s linear infinite;
+}
+@media (max-width: 767px) {
+  .conic-ring::before {
+    animation: none;
+  }
+}
+.section-card[data-active="false"] .conic-ring::before {
+  animation-play-state: paused;
+}
+
+/* Divider sweep: glint traveling a hairline under headings on reveal */
+.line-light {
+  position: relative;
+  height: 1px;
+  background: var(--hairline);
+  overflow: hidden;
+}
+.line-light::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 26%;
+  background: linear-gradient(90deg, transparent, rgba(69, 240, 166, .8), transparent);
+  transform: translateX(-110%);
+}
+.section-card[data-visited="true"] .line-light::after {
+  animation: lineLight 1.2s var(--ease-hud) .5s both;
+}
+
+/* Ken Burns wrapper (transform-only, active card only) */
+.kenburns {
+  animation: kenburns 14s var(--ease-hud) both;
+  will-change: transform;
+}
+
+/* Tile hover sheen (desktop one-shot) */
+.sheen-host {
+  position: relative;
+  overflow: hidden;
+}
+.sheen-host::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  left: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent, rgba(213, 255, 229, .07), transparent);
+  transform: translateX(-130%) skewX(-18deg);
+}
+@media (hover: hover) {
+  .sheen-host:hover::after {
+    animation: sheen .9s var(--ease-hud) both;
+  }
+}
+
+/* Dark map treatment */
+.map-dark iframe {
+  filter: invert(.92) hue-rotate(180deg) saturate(.65) brightness(.9);
+}
+
+/* ====================== HERO LAUNCH SEQUENCE (TracerArc) ==================
+ * Timeline: 0s trace draws (2.2s) → 0.3s HUD chips flicker on + count up →
+ * 1.9s apex marker → 2.2s landing ring → 2.3s BABY DRAW stamp → 2.4s CTA. */
+
+.tracer-scene .tracer-path {
+  animation: traceDraw 2.2s var(--ease-trace) both;
+}
+.tracer-scene .tracer-apex {
+  opacity: 0;
+  animation: fadeUpIn .5s var(--ease-hud) 1.9s both;
+}
+/* fill-mode must be forwards, NOT both — backwards fill would apply the
+   from-keyframe (visible ring) during the whole 2.2s delay. */
+.tracer-scene .tracer-ring {
+  opacity: 0;
+  animation: pulseRing .6s var(--ease-hud) 2.2s forwards;
+}
+
+.hud-seq .hud-chip {
+  opacity: 0;
+  animation: hudOn .24s ease-out both;
+  animation-delay: calc(.3s + var(--i, 0) * 90ms);
+}
+.hud-seq .hud-stamp {
+  opacity: 0;
+  animation: stampIn .5s var(--ease-hud) 2.3s both;
+}
+
+.cta-launch {
+  animation: ctaBloom .8s var(--ease-hud) 2.4s both;
+}
+.cta-pulse::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 8px;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(69, 240, 166, .35), transparent);
+  opacity: .15;
+  animation: ctaPulse 4.5s ease-in-out 3.2s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tracer-scene .tracer-path,
+  .tracer-scene .tracer-apex,
+  .tracer-scene .tracer-ring,
+  .hud-seq .hud-chip,
+  .hud-seq .hud-stamp,
+  .cta-launch,
+  .cta-pulse::before {
+    animation: none !important;
+  }
+  .tracer-scene .tracer-path {
+    stroke-dashoffset: 0;
+  }
+  .tracer-scene .tracer-apex,
+  .hud-seq .hud-chip,
+  .hud-seq .hud-stamp {
+    opacity: 1 !important;
+  }
+  .tracer-scene .tracer-ring {
+    opacity: 0 !important;
+  }
+}
+
+/* ============================ REDUCED MOTION ============================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-js] .section-card [data-reveal] {
+    opacity: 1;
+    transform: none;
+    animation: none !important;
+    animation-delay: 0s !important;
+  }
+  .amb,
+  .kenburns,
+  .conic-ring::before,
+  .line-light::after,
+  .sheen-host::after,
+  .room-dim {
+    animation: none !important;
+    transition-duration: .01ms !important;
+  }
+  .room-dim {
+    opacity: 0 !important;
   }
 }

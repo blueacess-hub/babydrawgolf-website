@@ -1,34 +1,124 @@
 'use client';
 
+import { useState } from 'react';
 import BookNowButton from './BookNowButton';
+import TracerArc from './fx/TracerArc';
+import HudReadout from './fx/HudReadout';
 
-export default function Hero() {
+export default function Hero({ active = true }: { active?: boolean }) {
+  // Remount the launch sequence each time the card re-activates so the
+  // tracer + HUD replay. Render-time previous-value comparison (no effect).
+  const [seq, setSeq] = useState({ active, launch: active ? 1 : 0 });
+  if (seq.active !== active) {
+    setSeq({ active, launch: active ? seq.launch + 1 : seq.launch });
+  }
+  const launch = seq.launch;
+
   return (
-    <section className="relative h-full flex items-center justify-center overflow-hidden">
-      {/* Background image as <img> for better mobile compatibility */}
-      <img
-        src="https://images.pexels.com/photos/31212256/pexels-photo-31212256.jpeg?auto=compress&cs=tinysrgb&w=1920"
-        alt=""
-        className="absolute inset-0 w-full h-full object-cover"
-        loading="eager"
+    // min-h-full + justify-end (not h-full + overflow-hidden): in short
+    // viewports (phone landscape) the section grows and the card's own
+    // y-scroll takes over instead of clipping the headline unreachably.
+    <section className="relative min-h-full flex flex-col justify-end">
+      {/* Bay photo, graded + slow Ken Burns push */}
+      <div className="absolute inset-0 overflow-hidden">
+        <img
+          src="https://images.pexels.com/photos/31212256/pexels-photo-31212256.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          alt=""
+          className="img-grade kenburns amb absolute inset-0 w-full h-full object-cover object-[center_72%] md:object-center"
+          loading="eager"
+        />
+      </div>
+      {/* Bottom-weighted scrim melts the photo into the page */}
+      <div className="absolute inset-0" style={{ background: 'var(--scrim-hero)' }} />
+      <div
+        className="absolute inset-0 hidden md:block"
+        style={{ background: 'linear-gradient(90deg, rgba(7,9,8,.5), transparent 55%)' }}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
+      <div className="lightfield" />
 
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight tracking-tight">
-          Your Private Golf Bay.
-          <br />
-          <span className="text-primary-light">Open 24/7.</span>
-        </h1>
-
-        <p className="mt-6 text-lg sm:text-xl text-white/80 max-w-2xl mx-auto">
-          Tour-level Trackman iO simulator in Cypress, TX. Book anytime. No
-          staff needed.
-        </p>
-
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <BookNowButton location="hero" size="lg" />
+      {/* Launch sequence: tracer arc + HUD readouts (replays per activation) */}
+      <div key={launch} className="absolute inset-0 pointer-events-none">
+        <TracerArc />
+        <div className="absolute right-6 lg:right-16 top-1/2 -translate-y-1/2 hidden md:block">
+          <HudReadout active={active} />
         </div>
+      </div>
+
+      {/* Copy — bottom-left anchored by the section's justify-end */}
+      <div className="relative z-10">
+        <div
+          className="px-6 md:px-16 lg:px-24 max-w-3xl pb-[calc(108px+env(safe-area-inset-bottom))] md:pb-[calc(110px+env(safe-area-inset-bottom))]"
+          data-reveal-group
+        >
+          {/* Broadcast eyebrow */}
+          <div
+            className="flex items-center gap-3 font-data text-[10px] md:text-[11px] font-medium tracking-[.18em] text-ink-mute uppercase"
+            data-reveal
+            style={{ '--i': 0 } as React.CSSProperties}
+          >
+            <span className="inline-block w-6 h-px bg-[var(--hairline)]" aria-hidden="true" />
+            <span className="flex items-center gap-1.5">
+              <span
+                className="amb inline-block w-1.5 h-1.5 rounded-full bg-rec"
+                style={{ animation: 'liveDot 2s ease-in-out infinite' }}
+                aria-hidden="true"
+              />
+              LIVE
+            </span>
+            <span aria-hidden="true">·</span>
+            <span>
+              <span className="hidden min-[430px]:inline">Bridgeland · </span>
+              Cypress TX — Open 24/7
+            </span>
+          </div>
+
+          <h1
+            className="mt-4 text-[clamp(2.75rem,8.5vw,6rem)]"
+            data-reveal
+            style={{ '--i': 1 } as React.CSSProperties}
+          >
+            Your Private Golf Bay.
+            <br />
+            <span className="text-trace" style={{ textShadow: 'var(--glow-text)' }}>
+              Open 24/7.
+            </span>
+          </h1>
+
+          <p
+            className="mt-5 text-[17px] md:text-lg text-ink-body max-w-[52ch] leading-relaxed"
+            data-reveal
+            style={{ '--i': 2 } as React.CSSProperties}
+          >
+            Three private bays. Tour-level Trackman iO. Book anytime — no
+            staff needed. Cypress, TX.
+          </p>
+
+          <div className="mt-8" data-reveal style={{ '--i': 3 } as React.CSSProperties}>
+            <BookNowButton location="hero" size="lg" className="cta-launch cta-pulse" />
+          </div>
+
+          {/* Mobile: one slim readout strip below the CTA (funnel stays clean) */}
+          <div key={`m-${launch}`} className="hud-seq mt-5 md:hidden" aria-hidden="true">
+            <div className="hud-stamp inline-flex items-center gap-2.5 hud-chip px-3 py-2 font-data text-[11px] tracking-[.08em]">
+              <span className="text-trace-soft font-bold tabular-nums">152.7 mph</span>
+              <span className="text-ink-mute">·</span>
+              <span className="text-trace-soft font-bold tabular-nums">246 yd</span>
+              <span className="text-ink-mute">·</span>
+              <span className="text-trace font-bold tracking-[.1em]">BABY DRAW</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile swipe cue */}
+      <div
+        className="md:hidden absolute right-5 bottom-[calc(78px+env(safe-area-inset-bottom))] z-10 font-data text-[10px] tracking-[.2em] text-ink-mute uppercase pointer-events-none"
+        aria-hidden="true"
+      >
+        Swipe{' '}
+        <span className="amb inline-block" style={{ animation: 'swipeNudge 2s ease-in-out infinite' }}>
+          →
+        </span>
       </div>
     </section>
   );

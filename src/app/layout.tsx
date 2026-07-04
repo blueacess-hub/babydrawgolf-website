@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Oswald, Roboto_Mono } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
 import faqData from '@/data/faq.json';
@@ -8,6 +8,20 @@ const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
+});
+
+const oswald = Oswald({
+  subsets: ['latin'],
+  weight: ['500', '600', '700'],
+  display: 'swap',
+  variable: '--font-oswald',
+});
+
+const robotoMono = Roboto_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  display: 'swap',
+  variable: '--font-roboto-mono',
 });
 
 export const metadata: Metadata = {
@@ -29,7 +43,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'BABYDRAW GOLF | 24/7 Indoor Golf Simulator in Cypress, TX',
     description:
-      'Tour-level Trackman iO simulator. Open 24/7. Book online, walk in and play.',
+      'Three private Trackman iO bays. Open 24/7. Book online, walk in and play.',
   },
   robots: {
     index: true,
@@ -43,6 +57,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
+  themeColor: '#0B0E0C',
 };
 
 // JSON-LD Structured Data
@@ -114,8 +129,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${oswald.variable} ${robotoMono.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
       <head>
+        {/* Reveal system gate: the hidden initial state only exists under
+            html[data-js], so no-JS visitors always see everything. Must run
+            before paint. Uses a data attribute (not className) because React
+            owns <html className> and would flag/clobber a foreign class.
+            The dead-man reveal floor is armed HERE, decoupled from React —
+            if the bundle 404s or hydration dies, content still appears at 3s.
+            page.tsx disarms it once React mounts and takes over per-card. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "document.documentElement.setAttribute('data-js','');window.__revealFloor=setTimeout(function(){document.documentElement.setAttribute('data-reveal-all','')},3000);",
+          }}
+        />
         <StructuredData />
       </head>
       <body className="h-full overflow-hidden font-sans">

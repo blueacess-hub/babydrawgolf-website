@@ -11,42 +11,105 @@ const values = [
 
 export default function OurStory() {
   return (
-    <section className="min-h-full flex flex-col justify-center bg-white pt-14 md:pt-0">
-      <div className="max-w-7xl mx-auto px-5 lg:px-8 py-10 lg:py-20 w-full">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+    <section className="relative min-h-full flex flex-col justify-center pt-14 md:pt-0">
+      <div className="lightfield" />
+      {/* Projector beam from top-left */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'conic-gradient(from 145deg at -5% -10%, transparent 42%, rgba(216,243,220,.05) 50%, transparent 58%)' }}
+        aria-hidden="true"
+      />
+
+      <div className="relative max-w-7xl mx-auto px-5 lg:px-8 py-10 lg:py-16 w-full">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Story */}
-          <div>
-            <p className="text-primary font-semibold text-sm md:text-base tracking-widest uppercase">Our Story</p>
-            <h2 className="mt-3 text-3xl md:text-4xl lg:text-5xl font-bold text-primary-dark tracking-tight leading-tight">
-              Built in Bridgeland,<br />for Bridgeland.
+          <div data-reveal-group>
+            <p
+              className="font-data text-[11px] font-medium tracking-[.18em] text-ink-mute uppercase"
+              data-reveal
+              style={{ '--i': 0 } as React.CSSProperties}
+            >
+              02 — Our Story
+            </p>
+            <h2
+              className="mt-3 text-[clamp(2rem,5vw,3.5rem)]"
+              data-reveal
+              style={{ '--i': 1 } as React.CSSProperties}
+            >
+              Built in Bridgeland,
+              <br />
+              for Bridgeland.
             </h2>
-            <p className="mt-4 md:mt-6 text-base md:text-lg text-gray-text leading-relaxed">
+            <div className="line-light mt-6 max-w-[320px]" data-reveal style={{ '--i': 2 } as React.CSSProperties} />
+
+            <p
+              className="mt-6 text-base md:text-[17px] text-ink-body leading-relaxed max-w-[60ch] font-normal"
+              data-reveal
+              style={{ '--i': 2 } as React.CSSProperties}
+            >
               We live in Bridgeland. We love golf. And we were frustrated — the nearest quality
               simulator was a 30-minute drive, always crowded, always on someone else&apos;s schedule.
               So we built BABYDRAW GOLF right here in our own community.
             </p>
-            <p className="mt-3 md:mt-5 text-base md:text-lg text-gray-text leading-relaxed">
+            <p
+              className="mt-4 text-base md:text-[17px] text-ink-body leading-relaxed max-w-[60ch] font-normal"
+              data-reveal
+              style={{ '--i': 3 } as React.CSSProperties}
+            >
               We want to raise the level of golf across Bridgeland and Cypress — hosting monthly
               tournaments, organizing neighborhood leagues, and giving every golfer here access to
               the same Trackman iO technology the PGA Tour pros use.
             </p>
-            <p className="mt-3 md:mt-5 text-base md:text-lg text-primary-dark font-medium">
+
+            {/* Pull-quote */}
+            <blockquote
+              className="mt-7 border-l-2 border-trace pl-5 font-display font-medium text-[22px] md:text-[26px] leading-snug text-ink"
+              data-reveal
+              style={{ '--i': 4 } as React.CSSProperties}
+            >
               Whether you are picking up a club for the first time or grinding to break 80,
               this is your home course.
-            </p>
+            </blockquote>
           </div>
 
-          {/* Values Grid */}
-          <div className="grid grid-cols-2 gap-3 md:gap-5">
-            {values.map((v) => (
-              <div key={v.title} className="bg-alt-bg rounded-lg md:rounded-xl p-4 md:p-6">
-                <div className="w-10 h-10 md:w-12 md:h-12 bg-primary-light rounded-lg flex items-center justify-center">
-                  <v.icon className="w-5 h-5 md:w-6 md:h-6 text-primary" />
-                </div>
-                <h3 className="mt-3 font-bold text-primary-dark text-sm md:text-base">{v.title}</h3>
-                <p className="mt-1 text-xs md:text-sm text-gray-text leading-relaxed">{v.desc}</p>
+          {/* Image + values */}
+          <div data-reveal-group>
+            <div
+              className="img-grade-wrap relative rounded-card overflow-hidden border border-line shadow-[var(--shadow-card)] h-56 md:h-72"
+              data-reveal
+              style={{ '--i': 0 } as React.CSSProperties}
+            >
+              <img
+                src="https://images.unsplash.com/photo-1505794718076-13e166c01a33?w=1600&q=80"
+                alt="Golfer at full swing against the evening sky"
+                className="img-grade kenburns amb w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute bottom-3 left-3 hud-chip px-3 py-1.5 z-[1]">
+                <p className="font-data text-[10px] font-medium tracking-[.18em] text-ink-mute uppercase">
+                  Your Home Course
+                </p>
               </div>
-            ))}
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 md:gap-4 mt-4 md:mt-5">
+              {values.map((v, i) => (
+                <div
+                  key={v.title}
+                  className="sheen-host bg-carbon-2 border border-line rounded-card p-4 md:p-5 transition-all duration-500 hover:-translate-y-1.5 hover:border-[rgba(69,240,166,.4)]"
+                  data-reveal
+                  style={{ '--i': i + 1 } as React.CSSProperties}
+                >
+                  <div className="w-9 h-9 md:w-10 md:h-10 rounded-[10px] bg-[rgba(69,240,166,.1)] flex items-center justify-center">
+                    <v.icon className="w-4 h-4 md:w-5 md:h-5 text-trace" />
+                  </div>
+                  <h3 className="mt-3 font-display font-semibold uppercase tracking-wide text-ink text-sm md:text-[15px]">
+                    {v.title}
+                  </h3>
+                  <p className="mt-1 text-xs md:text-[13px] text-ink-mute leading-relaxed font-normal">{v.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
