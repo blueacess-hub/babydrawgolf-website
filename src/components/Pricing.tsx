@@ -3,6 +3,58 @@
 import { Moon, Users } from 'lucide-react';
 import pricingData from '@/data/pricing.json';
 import BookNowButton from './BookNowButton';
+import { trackBookNowClick } from '@/lib/analytics';
+
+const BOOKING_URL = process.env.NEXT_PUBLIC_TRACKMAN_BOOKING_URL || '';
+const MEMBERSHIPS_URL = BOOKING_URL
+  ? BOOKING_URL.replace(/\/booking\/?$/, '').replace(/\/$/, '') + '/memberships'
+  : '';
+
+function RateRow({ href, location, className, children }: {
+  href: string;
+  location: string;
+  className: string;
+  children: React.ReactNode;
+}) {
+  if (!href) return <div className={className}>{children}</div>;
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={() => trackBookNowClick(location)}
+      className={`${className} group cursor-pointer transition-colors duration-300 hover:bg-[rgba(69,240,166,.05)]`}
+    >
+      {children}
+    </a>
+  );
+}
+
+function MembershipCard({ href, location, className, style, children, ...rest }: {
+  href: string;
+  location: string;
+  className: string;
+  style?: React.CSSProperties;
+  children: React.ReactNode;
+} & Record<string, unknown>) {
+  if (!href) {
+    return <div className={className} style={style} {...rest}>{children}</div>;
+  }
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={() => trackBookNowClick(location)}
+      aria-label={`${location.replace('membership-', '')} membership — view and join`}
+      className={className}
+      style={style}
+      {...rest}
+    >
+      {children}
+    </a>
+  );
+}
 
 const memberships = [
   { tier: 'Birdie', price: '$99', unit: '/mo', hours: '8 hrs/month', extra: '$30/hr additional', highlighted: false, lux: false },
@@ -50,21 +102,30 @@ export default function Pricing() {
               style={{ '--i': 1 } as React.CSSProperties}
             >
               {pricingData.map((tier) => (
-                <div key={tier.tier} className="flex items-end gap-3 py-3.5 md:py-4 border-b border-[var(--hairline)]">
+                <RateRow
+                  key={tier.tier}
+                  href={BOOKING_URL}
+                  location={`pricing-${tier.tier.toLowerCase()}`}
+                  className="flex items-end gap-3 py-3.5 md:py-4 border-b border-[var(--hairline)] -mx-2 px-2 rounded"
+                >
                   <div className="min-w-0">
                     <p className="font-data text-xs md:text-[13px] font-medium tracking-[.15em] text-ink uppercase">{tier.tier}</p>
                     <p className="font-data text-[10px] md:text-[11px] text-ink-mute mt-0.5">{tier.duration} — {tier.description}</p>
                   </div>
                   <div className="leader flex-1 mb-1.5 min-w-4" aria-hidden="true" />
-                  <p className="shrink-0 font-data font-bold tabular-nums text-trace-soft text-[26px] md:text-[32px] leading-none">
+                  <p className="shrink-0 font-data font-bold tabular-nums text-trace-soft group-hover:text-trace transition-colors duration-300 text-[26px] md:text-[32px] leading-none">
                     {tier.price}
                     <span className="text-[11px] md:text-xs font-medium text-ink-mute">{tier.unit}</span>
                   </p>
-                </div>
+                </RateRow>
               ))}
 
               {/* Night Owl is a product, not a discount */}
-              <div className="flex items-end gap-3 py-3.5 md:py-4">
+              <RateRow
+                href={BOOKING_URL}
+                location="pricing-nightowl"
+                className="flex items-end gap-3 py-3.5 md:py-4 -mx-2 px-2 rounded"
+              >
                 <div className="shrink-0">
                   <p className="font-data text-xs md:text-[13px] font-medium tracking-[.15em] text-trace uppercase flex items-center gap-1.5">
                     <Moon className="w-3.5 h-3.5" /> Night Owl
@@ -75,7 +136,7 @@ export default function Pricing() {
                 <p className="shrink-0 font-data font-bold tabular-nums text-trace text-[26px] md:text-[32px] leading-none">
                   $30<span className="text-[11px] md:text-xs font-medium text-ink-mute">/hr</span>
                 </p>
-              </div>
+              </RateRow>
 
               <div className="border-t border-[var(--hairline)] py-3.5 md:py-4">
                 <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
@@ -110,7 +171,9 @@ export default function Pricing() {
             </h3>
             {/* Founding 25 — pre-launch charter offer */}
             <a
-              href={`mailto:${'info@babydrawgolf.net'}?subject=${encodeURIComponent('Founding 25 — claim my spot')}`}
+              href={MEMBERSHIPS_URL || `mailto:${'info@babydrawgolf.net'}?subject=${encodeURIComponent('Founding 25 — claim my spot')}`}
+              {...(MEMBERSHIPS_URL ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              onClick={() => trackBookNowClick('membership-founding25')}
               className="conic-ring block bg-[rgba(69,240,166,.07)] border border-[rgba(69,240,166,.35)] rounded-card px-4 md:px-6 py-3 mb-3 hover:bg-[rgba(69,240,166,.11)] transition-colors duration-300"
               data-reveal
               style={{ '--i': 1 } as React.CSSProperties}
@@ -135,9 +198,11 @@ export default function Pricing() {
 
             <div className="space-y-3">
               {memberships.map((m, i) => (
-                <div
+                <MembershipCard
                   key={m.tier}
-                  className={`${m.highlighted || m.lux ? 'conic-ring' : ''} ${m.lux ? 'ring-lux' : ''} sheen-host bg-carbon-2 border border-line rounded-card px-4 md:px-6 py-3.5 md:py-4 transition-all duration-500 hover:-translate-y-1 ${m.lux ? 'hover:border-[rgba(230,201,126,.5)]' : 'hover:border-[rgba(69,240,166,.4)]'}`}
+                  href={MEMBERSHIPS_URL}
+                  location={`membership-${m.tier.toLowerCase()}`}
+                  className={`${m.highlighted || m.lux ? 'conic-ring' : ''} ${m.lux ? 'ring-lux' : ''} sheen-host block bg-carbon-2 border border-line rounded-card px-4 md:px-6 py-3.5 md:py-4 transition-all duration-500 hover:-translate-y-1 ${m.lux ? 'hover:border-[rgba(230,201,126,.5)]' : 'hover:border-[rgba(69,240,166,.4)]'} ${MEMBERSHIPS_URL ? 'cursor-pointer' : ''}`}
                   data-reveal
                   style={{ '--i': i + 2 } as React.CSSProperties}
                 >
@@ -172,7 +237,7 @@ export default function Pricing() {
                       {m.extra}
                     </p>
                   </div>
-                </div>
+                </MembershipCard>
               ))}
             </div>
 
