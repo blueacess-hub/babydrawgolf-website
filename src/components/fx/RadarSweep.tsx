@@ -39,22 +39,15 @@ export default function RadarSweep() {
           <circle cx="200" cy="200" r="74" fill="none" stroke="rgba(69,240,166,.03)" strokeWidth="1" />
         </svg>
 
-        {/* Rotating sweep (static conic below md) */}
+        {/* Rotating sweep — transform-only, cheap on phones too; paused
+            off-active via .amb */}
         <div
-          className="amb absolute inset-[6%] rounded-full hidden md:block"
+          className="amb absolute inset-[6%] rounded-full"
           style={{
             background: 'conic-gradient(from 0deg, rgba(69,240,166,.16), transparent 26%)',
             WebkitMaskImage: 'radial-gradient(circle, black 58%, transparent 70%)',
             maskImage: 'radial-gradient(circle, black 58%, transparent 70%)',
             animation: 'radarSpin 7s linear infinite',
-          }}
-        />
-        <div
-          className="absolute inset-[6%] rounded-full md:hidden"
-          style={{
-            background: 'conic-gradient(from 40deg, rgba(69,240,166,.14), transparent 26%)',
-            WebkitMaskImage: 'radial-gradient(circle, black 58%, transparent 70%)',
-            maskImage: 'radial-gradient(circle, black 58%, transparent 70%)',
           }}
         />
 
