@@ -183,13 +183,22 @@ h1, h2 {
 /* ============================ ATMOSPHERE LAYERS =========================== */
 
 /* Continuity light field behind the whole deck — parallax at 0.12x of deck
-   scroll (5 extra viewports × .12 = 60vw = exactly the extra field width). */
+   scroll (5 extra viewports × .12 = 60vw = exactly the extra field width).
+   The wrapper stays at 100vw and clips: an oversized FIXED element would
+   widen iOS Safari's layout viewport and zoom the whole page out ("UI wider
+   than the screen"). Only the inner ::before is 160vw, safely clipped. */
 .aurora-field {
   position: fixed;
   inset: 0;
-  width: 160vw;
   z-index: 0;
   pointer-events: none;
+  overflow: hidden;
+}
+.aurora-field::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 160vw;
   will-change: transform;
   transform: translateX(calc(var(--deck-x, 0px) * -0.12));
   background:
