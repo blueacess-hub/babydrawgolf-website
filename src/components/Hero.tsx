@@ -19,14 +19,19 @@ export default function Hero({ active = true }: { active?: boolean }) {
     // viewports (phone landscape) the section grows and the card's own
     // y-scroll takes over instead of clipping the headline unreachably.
     <section className="relative min-h-full flex flex-col justify-end">
-      {/* Bay photo, graded + slow Ken Burns push */}
+      {/* Bay photo, graded + slow Ken Burns push.
+          Mobile gets a purpose-shot portrait (golfer facing the sim screen);
+          desktop keeps the wide bay photo. <picture> loads only the match. */}
       <div className="absolute inset-0 overflow-hidden">
-        <img
-          src="https://images.pexels.com/photos/31212256/pexels-photo-31212256.jpeg?auto=compress&cs=tinysrgb&w=1920"
-          alt=""
-          className="img-grade kenburns amb absolute inset-0 w-full h-full object-cover object-[center_72%] md:object-center"
-          loading="eager"
-        />
+        <picture>
+          <source media="(max-width: 767px)" srcSet="/images/hero-mobile.jpg" />
+          <img
+            src="https://images.pexels.com/photos/31212256/pexels-photo-31212256.jpeg?auto=compress&cs=tinysrgb&w=1920"
+            alt=""
+            className="img-grade kenburns amb absolute inset-0 w-full h-full object-cover object-center"
+            loading="eager"
+          />
+        </picture>
       </div>
       {/* Bottom-weighted scrim melts the photo into the page */}
       <div className="absolute inset-0" style={{ background: 'var(--scrim-hero)' }} />

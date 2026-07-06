@@ -80,8 +80,8 @@ export default function OurStory() {
               style={{ '--i': 0 } as React.CSSProperties}
             >
               <img
-                src="https://images.unsplash.com/photo-1505794718076-13e166c01a33?w=1600&q=80"
-                alt="Golfer at full swing against the evening sky"
+                src="/images/home-course.jpg"
+                alt="Golfer mid-swing inside a premium indoor Trackman simulator bay"
                 className="img-grade kenburns amb w-full h-full object-cover"
                 loading="lazy"
               />
