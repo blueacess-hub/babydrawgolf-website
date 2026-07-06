@@ -50,6 +50,33 @@ export default function Home() {
     });
   }, []);
 
+  // The deck must ALWAYS open on the hero. Browsers — mobile Safari most
+  // aggressively — restore the horizontal scrollLeft of this overflow
+  // container across refresh and bfcache, dropping the visitor onto a random,
+  // half-snapped card while React state still reads index 0. That is exactly
+  // the "off-centre / different every refresh" instability. Kill it.
+  useEffect(() => {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    const home = () => {
+      const el = scrollRef.current;
+      if (el && el.scrollLeft !== 0) el.scrollLeft = 0;
+      document.documentElement.style.setProperty('--deck-x', '0px');
+    };
+    home();
+    // Some engines restore the position only after mount / first paint.
+    requestAnimationFrame(home);
+    const onLoad = () => home();
+    const onShow = (e: PageTransitionEvent) => {
+      if (e.persisted) { home(); setActiveIndex(0); } // bfcache restore
+    };
+    window.addEventListener('load', onLoad);
+    window.addEventListener('pageshow', onShow);
+    return () => {
+      window.removeEventListener('load', onLoad);
+      window.removeEventListener('pageshow', onShow);
+    };
+  }, []);
+
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
