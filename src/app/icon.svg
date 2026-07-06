@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- BABYDRAW GOLF favicon: the brand mark only (tracer arc + flag) -->
+  <rect width="64" height="64" rx="13" fill="#0B0E0C"/>
+  <!-- soft glow underlay -->
+  <path d="M10 45 Q 31 13, 50 27" fill="none" stroke="rgba(69,240,166,.28)" stroke-width="9" stroke-linecap="round"/>
+  <!-- tracer arc -->
+  <path d="M10 45 Q 31 13, 50 27" fill="none" stroke="#45F0A6" stroke-width="4.2" stroke-linecap="round"/>
+  <!-- flag pole rising from the landing point -->
+  <line x1="50" y1="27" x2="50" y2="13" stroke="#EDF6F0" stroke-width="3" stroke-linecap="round"/>
+  <!-- flag -->
+  <path d="M50 13 L50 23 L60 18 Z" fill="#45F0A6"/>
+</svg>

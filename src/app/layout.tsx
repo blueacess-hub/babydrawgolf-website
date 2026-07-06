@@ -25,6 +25,7 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://babydrawgolf.net'),
   title: 'BABYDRAW GOLF | 24/7 Indoor Golf Simulator in Cypress, TX',
   description:
     'Private indoor golf simulator bay with Trackman iO technology. Open 24/7. Book online, get your PIN, walk in and play. Located in Cypress, Texas.',
