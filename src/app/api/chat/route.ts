@@ -32,9 +32,9 @@ BOOKING LINKS (share these when relevant):
 
 HOURLY PRICING (per bay, up to 4 players — split it with friends and it's from ~$9/hr each):
 - Night Owl (every day midnight–6am): $30/hr
-- Off-Peak (Mon–Fri 6am–3pm): $35/hr
-- Standard (Mon–Thu 3pm–midnight): $50/hr
-- Peak (Fri 3pm–midnight + Sat–Sun 6am–midnight): $55/hr
+- Off-Peak (Mon–Fri 6am–4pm): $35/hr
+- Standard (Mon–Thu 4pm–midnight): $50/hr
+- Peak (Fri 4pm–midnight + Sat–Sun 6am–midnight): $55/hr
 
 MEMBERSHIPS (all: priority booking, 24/7 access, cancel anytime):
 - **Founding 25 — pre-opening only: $149/mo, first 25 members only.** Eagle benefits (15 hrs/month) with the rate locked for life while the membership stays active. When 25 spots are gone, it's gone.

@@ -1,7 +1,7 @@
 [
   {
     "tier": "Off-Peak",
-    "duration": "Mon–Fri 6am–3pm",
+    "duration": "Mon–Fri 6am–4pm",
     "price": "$35",
     "unit": "/hr",
     "description": "Daytime sessions at the best rate",
@@ -15,7 +15,7 @@
   },
   {
     "tier": "Standard",
-    "duration": "Mon–Thu 3pm–midnight",
+    "duration": "Mon–Thu 4pm–midnight",
     "price": "$50",
     "unit": "/hr",
     "description": "After-work & evening sessions",
@@ -32,7 +32,7 @@
     "duration": "Fri eve & weekends",
     "price": "$55",
     "unit": "/hr",
-    "description": "Fri 3pm–midnight & Sat–Sun 6am–midnight",
+    "description": "Fri 4pm–midnight & Sat–Sun 6am–midnight",
     "features": [
       "Full Trackman iO simulator access",
       "200+ virtual courses",
