@@ -184,7 +184,7 @@ export default function Pricing() {
                     Founding 25 — Pre-Opening Only
                   </p>
                   <p className="mt-1 text-xs md:text-[13px] text-ink-body font-normal">
-                    Eagle benefits, <strong className="text-ink">locked for life</strong>. 25 spots. Nothing charged until we open.
+                    Eagle benefits, <strong className="text-ink">locked for life</strong>. 25 spots. Pre-opening payments credit toward future dues.
                   </p>
                 </div>
                 <p className="shrink-0 font-data font-bold tabular-nums text-trace text-[24px] md:text-[28px] leading-none">

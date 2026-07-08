@@ -68,12 +68,12 @@ export default function Hero({ active = true }: { active?: boolean }) {
                 style={{ animation: 'liveDot 2s ease-in-out infinite' }}
                 aria-hidden="true"
               />
-              LIVE
+              PRE-OPENING
             </span>
             <span aria-hidden="true">·</span>
             <span>
               <span className="hidden min-[430px]:inline">Bridgeland · </span>
-              Cypress TX — Open 24/7
+              Cypress TX — Opening Mid-August
             </span>
           </div>
 
@@ -85,7 +85,7 @@ export default function Hero({ active = true }: { active?: boolean }) {
             Your Private Golf Bay.
             <br />
             <span className="text-trace" style={{ textShadow: 'var(--glow-text)' }}>
-              Open 24/7.
+              Opening Mid-August.
             </span>
           </h1>
 
@@ -94,11 +94,20 @@ export default function Hero({ active = true }: { active?: boolean }) {
             data-reveal
             style={{ '--i': 2 } as React.CSSProperties}
           >
-            Three private bays. Tour-level Trackman iO. Book anytime — no
-            staff needed. Cypress, TX.
+            Three private bays. Tour-level Trackman iO. Sign up now for
+            priority access before we open in mid-August 2026. 24/7
+            self-service access after launch.
           </p>
 
-          <div className="mt-5 md:mt-8" data-reveal style={{ '--i': 3 } as React.CSSProperties}>
+          <p
+            className="mt-2 font-data text-[11px] md:text-xs text-trace-soft uppercase tracking-[.12em]"
+            data-reveal
+            style={{ '--i': 3 } as React.CSSProperties}
+          >
+            Expected opening: mid-August 2026
+          </p>
+
+          <div className="mt-5 md:mt-8" data-reveal style={{ '--i': 4 } as React.CSSProperties}>
             <BookNowButton location="hero" size="lg" className="cta-launch cta-pulse" />
           </div>
 

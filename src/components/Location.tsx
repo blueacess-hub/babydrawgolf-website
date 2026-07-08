@@ -52,7 +52,7 @@ export default function Location() {
             <div className="flex items-center gap-5 md:gap-8" data-reveal style={{ '--i': 2 } as React.CSSProperties}>
               {/* 24/7 as jewelry */}
               <div className="shrink-0 pr-5 md:pr-8 border-r border-[var(--hairline)]">
-                <p className="font-data text-[10px] font-medium tracking-[.2em] text-ink-mute uppercase">Open</p>
+                <p className="font-data text-[10px] font-medium tracking-[.2em] text-ink-mute uppercase">After Opening</p>
                 <p className="font-data font-bold tabular-nums text-trace-soft text-[44px] md:text-[56px] leading-none mt-1">
                   24/7
                 </p>
@@ -66,14 +66,14 @@ export default function Location() {
                   <MapPin className="w-4 h-4 text-trace mt-0.5 shrink-0" />
                   <div>
                     <p className="font-display font-semibold uppercase tracking-wide text-ink text-xs md:text-[13px]">Address</p>
-                    <p className="text-ink-mute text-xs md:text-[13px] font-normal">Suite 501, Oakhouse Business Park, Cypress, TX</p>
+                    <p className="text-ink-mute text-xs md:text-[13px] font-normal">Suite 501, Oakhouse Business Park, Cypress, TX 77433</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <Clock className="w-4 h-4 text-trace mt-0.5 shrink-0" />
                   <div>
                     <p className="font-display font-semibold uppercase tracking-wide text-ink text-xs md:text-[13px]">Hours</p>
-                    <p className="text-ink-mute text-xs md:text-[13px] font-normal">24/7 Self-Service</p>
+                    <p className="text-ink-mute text-xs md:text-[13px] font-normal">Expected mid-August, then 24/7 self-service</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">

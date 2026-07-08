@@ -26,15 +26,15 @@ const robotoMono = Roboto_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://babydrawgolf.net'),
-  title: 'BABYDRAW GOLF | 24/7 Indoor Golf Simulator in Cypress, TX',
+  title: 'BABYDRAW GOLF | Indoor Golf Simulator in Cypress, TX',
   description:
-    'Private indoor golf simulator bay with Trackman iO technology. Open 24/7. Book online, get your PIN, walk in and play. Located in Cypress, Texas.',
+    'Private indoor golf simulator bay with Trackman iO technology in Cypress, Texas. Expected opening: mid-August 2026. Sign up now for priority access.',
   keywords:
     'indoor golf simulator, Cypress TX, Trackman simulator, 24/7 golf, golf simulator near me, virtual golf Cypress, babydraw golf',
   openGraph: {
-    title: 'BABYDRAW GOLF | 24/7 Indoor Golf Simulator in Cypress, TX',
+    title: 'BABYDRAW GOLF | Indoor Golf Simulator in Cypress, TX',
     description:
-      'Private indoor golf simulator bay with Trackman iO technology. Open 24/7 in Cypress, Texas.',
+      'Private indoor golf simulator bay with Trackman iO technology. Expected opening: mid-August 2026 in Cypress, Texas.',
     url: 'https://babydrawgolf.net',
     siteName: 'BABYDRAW GOLF',
     type: 'website',
@@ -42,9 +42,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'BABYDRAW GOLF | 24/7 Indoor Golf Simulator in Cypress, TX',
+    title: 'BABYDRAW GOLF | Indoor Golf Simulator in Cypress, TX',
     description:
-      'Three private Trackman iO bays. Open 24/7. Book online, walk in and play.',
+      'Three private Trackman iO bays. Expected opening: mid-August 2026. Sign up now for priority access.',
   },
   robots: {
     index: true,
@@ -68,7 +68,7 @@ function StructuredData() {
     '@type': 'SportsActivityLocation',
     name: 'BABYDRAW GOLF',
     description:
-      'Private indoor golf simulator bay with Trackman iO technology. Open 24/7.',
+      'Private indoor golf simulator bay with Trackman iO technology. Expected opening: mid-August 2026.',
     url: 'https://babydrawgolf.net',
     telephone: '',
     email: 'info@babydrawgolf.net',
@@ -77,6 +77,7 @@ function StructuredData() {
       streetAddress: 'Suite 501, Oakhouse Business Park',
       addressLocality: 'Cypress',
       addressRegion: 'TX',
+      postalCode: '77433',
       addressCountry: 'US',
     },
     openingHoursSpecification: {

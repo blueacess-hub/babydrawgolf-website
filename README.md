@@ -37,7 +37,7 @@ Copy `.env.local.example` to `.env.local` and fill in:
 | `NEXT_PUBLIC_GOOGLE_MAPS_EMBED` | No | Google Maps embed URL (falls back to Cypress, TX area) |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | No | Contact email (defaults to info@babydrawgolf.net) |
 
-Without `NEXT_PUBLIC_TRACKMAN_BOOKING_URL`, all Book Now buttons show "Coming Soon".
+Without `NEXT_PUBLIC_TRACKMAN_BOOKING_URL`, all Sign Up Now buttons show "Coming Soon".
 
 ## Editable Data Files
 

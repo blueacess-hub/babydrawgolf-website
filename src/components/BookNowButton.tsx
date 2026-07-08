@@ -59,7 +59,7 @@ export default function BookNowButton({
       onClick={handleClick}
       className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
     >
-      Book Now
+      Sign Up Now
       <span aria-hidden="true">→</span>
     </a>
   );
