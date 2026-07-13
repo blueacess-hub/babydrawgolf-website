@@ -74,7 +74,7 @@ function StructuredData() {
     email: 'info@babydrawgolf.net',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Suite 501, Oakhouse Business Park',
+      streetAddress: '20049 House Hahl Rd Ste 501',
       addressLocality: 'Cypress',
       addressRegion: 'TX',
       postalCode: '77433',

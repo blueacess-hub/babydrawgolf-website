@@ -10,7 +10,7 @@ export default function Location() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const mapSrc =
     process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED ||
-    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55394.77842697!2d-95.7!3d29.97!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sCypress%2C+TX!5e0!3m2!1sen!2sus!4v1';
+    'https://www.google.com/maps?q=20049+House+Hahl+Rd+Ste+501,+Cypress,+TX+77433&output=embed';
 
   return (
     <section className="relative min-h-full flex flex-col pt-16 md:pt-20">
@@ -66,7 +66,7 @@ export default function Location() {
                   <MapPin className="w-4 h-4 text-trace mt-0.5 shrink-0" />
                   <div>
                     <p className="font-display font-semibold uppercase tracking-wide text-ink text-xs md:text-[13px]">Address</p>
-                    <p className="text-ink-mute text-xs md:text-[13px] font-normal">Suite 501, Oakhouse Business Park, Cypress, TX 77433</p>
+                    <p className="text-ink-mute text-xs md:text-[13px] font-normal">20049 House Hahl Rd Ste 501, Cypress, TX 77433</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">

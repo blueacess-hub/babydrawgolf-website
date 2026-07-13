@@ -16,7 +16,7 @@ KEY FACTS — answer from these ONLY, never invent information:
 
 FACILITY:
 - 3 private bays, TrackMan iO on every bay (the same tracking tech PGA Tour pros use)
-- Location: Suite 501, Oakhouse Business Park, Cypress, TX (Bridgeland area)
+- Location: 20049 House Hahl Rd Ste 501, Cypress, TX 77433 (Bridgeland area)
 - Hours: 24/7, 365 days a year — fully unmanned, self-service
 - Entry: book online, receive a PIN code by email + the Trackman Golf App, punch it in at the door
 - Features: 200+ virtual courses (Pebble Beach, St Andrews...), full swing analytics, practice modes, multiplayer
