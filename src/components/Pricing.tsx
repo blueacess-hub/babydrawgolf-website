@@ -1,8 +1,8 @@
 'use client';
 
-import { Moon, Users } from 'lucide-react';
+import { useState } from 'react';
+import { Check, Moon, Users } from 'lucide-react';
 import pricingData from '@/data/pricing.json';
-import BookNowButton from './BookNowButton';
 import { trackBookNowClick } from '@/lib/analytics';
 
 const BOOKING_URL = process.env.NEXT_PUBLIC_TRACKMAN_BOOKING_URL || '';
@@ -10,48 +10,99 @@ const MEMBERSHIPS_URL = BOOKING_URL
   ? BOOKING_URL.replace(/\/booking\/?$/, '').replace(/\/$/, '') + '/memberships'
   : '';
 
-function RateRow({ href, location, className, children }: {
-  href: string;
-  location: string;
+function RateRow({ selected, onSelect, className, label, children }: {
+  selected: boolean;
+  onSelect: () => void;
   className: string;
+  label: string;
   children: React.ReactNode;
 }) {
-  if (!href) return <div className={className}>{children}</div>;
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={() => trackBookNowClick(location)}
-      className={`${className} group cursor-pointer transition-colors duration-300 hover:bg-[rgba(69,240,166,.05)]`}
+    <button
+      type="button"
+      onClick={onSelect}
+      aria-pressed={selected}
+      aria-label={`Select ${label} rate`}
+      className={`${className} group w-full cursor-pointer text-left transition-all duration-300 ${
+        selected
+          ? 'bg-[rgba(69,240,166,.09)] shadow-[inset_3px_0_0_#45F0A6]'
+          : 'hover:bg-[rgba(69,240,166,.05)]'
+      }`}
     >
       {children}
-    </a>
+      <span
+        className={`shrink-0 w-5 h-5 rounded-full border flex items-center justify-center transition-all duration-300 ${
+          selected
+            ? 'border-trace bg-trace text-carbon-0 scale-100 opacity-100'
+            : 'border-[var(--hairline)] scale-75 opacity-0'
+        }`}
+        aria-hidden="true"
+      >
+        <Check className="w-3 h-3" strokeWidth={3} />
+      </span>
+    </button>
   );
 }
 
-function MembershipCard({ href, location, className, style, children, ...rest }: {
-  href: string;
+type MembershipCardProps = {
+  selected: boolean;
+  onSelect: () => void;
   location: string;
   className: string;
   style?: React.CSSProperties;
   children: React.ReactNode;
-} & Record<string, unknown>) {
+} & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'className' | 'style' | 'onClick' | 'onSelect'>;
+
+function MembershipCard({ selected, onSelect, location, className, style, children, ...rest }: MembershipCardProps) {
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      aria-pressed={selected}
+      aria-label={`Select ${location.replace('membership-', '')} membership`}
+      className={`${className} relative w-full text-left ${
+        selected
+          ? 'bg-[rgba(69,240,166,.10)] border-[rgba(69,240,166,.65)] shadow-[0_0_0_1px_rgba(69,240,166,.18),var(--shadow-card)]'
+          : ''
+      }`}
+      style={style}
+      {...rest}
+    >
+      {children}
+    </button>
+  );
+}
+
+function SelectionCTA({ href, label, emptyLabel, location }: {
+  href: string;
+  label: string;
+  emptyLabel: string;
+  location: string;
+}) {
+  const baseStyles = 'relative w-full inline-flex items-center justify-center gap-2 px-7 py-3 font-data text-[12px] font-bold uppercase tracking-[.08em] rounded-btn transition-all duration-300';
+
   if (!href) {
-    return <div className={className} style={style} {...rest}>{children}</div>;
+    return (
+      <button
+        type="button"
+        disabled
+        className={`${baseStyles} cursor-not-allowed border border-[var(--hairline)] bg-carbon-1 text-ink-mute opacity-65`}
+      >
+        {emptyLabel}
+      </button>
+    );
   }
+
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
       onClick={() => trackBookNowClick(location)}
-      aria-label={`${location.replace('membership-', '')} membership — view and join`}
-      className={className}
-      style={style}
-      {...rest}
+      className={`${baseStyles} cta-pulse cursor-pointer bg-trace text-carbon-0 hover:bg-trace-hover hover:shadow-[var(--glow-cta)] hover:-translate-y-0.5 active:scale-[.98]`}
     >
-      {children}
+      {label}
+      <span aria-hidden="true">→</span>
     </a>
   );
 }
@@ -65,6 +116,21 @@ const memberships = [
 const included = ['Trackman iO simulator', '200+ courses', 'Swing analytics', 'BYOB welcome'];
 
 export default function Pricing() {
+  const [selectedRate, setSelectedRate] = useState<string | null>(null);
+  const [selectedMembership, setSelectedMembership] = useState<string | null>(null);
+
+  const selectedRateDetails = selectedRate === 'Night Owl'
+    ? { tier: 'Night Owl', price: '$30', unit: '/hr' }
+    : pricingData.find((tier) => tier.tier === selectedRate);
+  const selectedMembershipDetails = selectedMembership === 'Founding 25'
+    ? { tier: 'Founding 25', price: '$149', unit: '/mo' }
+    : memberships.find((membership) => membership.tier === selectedMembership);
+  const membershipHref = selectedMembershipDetails
+    ? MEMBERSHIPS_URL || (selectedMembershipDetails.tier === 'Founding 25'
+      ? `mailto:${'info@babydrawgolf.net'}?subject=${encodeURIComponent('Founding 25 — claim my spot')}`
+      : '')
+    : '';
+
   return (
     <section className="relative min-h-full flex flex-col justify-center pt-16 md:pt-20 pb-20 md:pb-24 carbon-weave">
       <div className="lightfield" />
@@ -96,6 +162,7 @@ export default function Pricing() {
             >
               Hourly Rates
             </h3>
+            <p className="font-data text-[10px] text-ink-mute mb-2">Select a rate, then continue to booking.</p>
             <div
               className="bg-carbon-2 border border-line rounded-card shadow-[var(--shadow-card)] px-4 md:px-6 py-2"
               data-reveal
@@ -104,8 +171,9 @@ export default function Pricing() {
               {pricingData.map((tier) => (
                 <RateRow
                   key={tier.tier}
-                  href={BOOKING_URL}
-                  location={`pricing-${tier.tier.toLowerCase()}`}
+                  selected={selectedRate === tier.tier}
+                  onSelect={() => setSelectedRate(tier.tier)}
+                  label={tier.tier}
                   className="flex items-end gap-3 py-3.5 md:py-4 border-b border-[var(--hairline)] -mx-2 px-2 rounded"
                 >
                   <div className="min-w-0">
@@ -122,8 +190,9 @@ export default function Pricing() {
 
               {/* Night Owl is a product, not a discount */}
               <RateRow
-                href={BOOKING_URL}
-                location="pricing-nightowl"
+                selected={selectedRate === 'Night Owl'}
+                onSelect={() => setSelectedRate('Night Owl')}
+                label="Night Owl"
                 className="flex items-end gap-3 py-3.5 md:py-4 -mx-2 px-2 rounded"
               >
                 <div className="shrink-0">
@@ -154,7 +223,14 @@ export default function Pricing() {
                   Per bay, not per person — split it with 3 friends and it&apos;s from ~$9/hr each.
                 </p>
                 <div className="mt-4">
-                  <BookNowButton location="pricing" size="md" className="w-full cta-pulse" />
+                  <div aria-live="polite">
+                    <SelectionCTA
+                      href={selectedRateDetails && BOOKING_URL ? BOOKING_URL : ''}
+                      label={selectedRateDetails ? `Continue — ${selectedRateDetails.tier} ${selectedRateDetails.price}${selectedRateDetails.unit}` : ''}
+                      emptyLabel="Select a rate above"
+                      location={`pricing-${selectedRate?.toLowerCase().replaceAll(' ', '-') || 'unselected'}-continue`}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -169,12 +245,17 @@ export default function Pricing() {
             >
               Memberships
             </h3>
+            <p className="font-data text-[10px] text-ink-mute mb-2">Select a membership, then continue to signup.</p>
             {/* Founding 25 — pre-launch charter offer */}
-            <a
-              href={MEMBERSHIPS_URL || `mailto:${'info@babydrawgolf.net'}?subject=${encodeURIComponent('Founding 25 — claim my spot')}`}
-              {...(MEMBERSHIPS_URL ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              onClick={() => trackBookNowClick('membership-founding25')}
-              className="conic-ring block bg-[rgba(69,240,166,.07)] border border-[rgba(69,240,166,.35)] rounded-card px-4 md:px-6 py-3 mb-3 hover:bg-[rgba(69,240,166,.11)] transition-colors duration-300"
+            <button
+              type="button"
+              onClick={() => setSelectedMembership('Founding 25')}
+              aria-pressed={selectedMembership === 'Founding 25'}
+              className={`conic-ring relative block w-full text-left bg-[rgba(69,240,166,.07)] border rounded-card px-4 md:px-6 py-3 mb-3 transition-all duration-300 ${
+                selectedMembership === 'Founding 25'
+                  ? 'border-trace bg-[rgba(69,240,166,.13)] shadow-[0_0_0_1px_rgba(69,240,166,.18),var(--shadow-card)]'
+                  : 'border-[rgba(69,240,166,.35)] hover:bg-[rgba(69,240,166,.11)]'
+              }`}
               data-reveal
               style={{ '--i': 1 } as React.CSSProperties}
             >
@@ -192,17 +273,18 @@ export default function Pricing() {
                 </p>
               </div>
               <p className="mt-1.5 font-data text-[10px] md:text-[11px] text-trace-soft">
-                Claim a spot →
+                Select Founding 25
               </p>
-            </a>
+            </button>
 
             <div className="space-y-3">
               {memberships.map((m, i) => (
                 <MembershipCard
                   key={m.tier}
-                  href={MEMBERSHIPS_URL}
+                  selected={selectedMembership === m.tier}
+                  onSelect={() => setSelectedMembership(m.tier)}
                   location={`membership-${m.tier.toLowerCase()}`}
-                  className={`${m.highlighted || m.lux ? 'conic-ring' : ''} ${m.lux ? 'ring-lux' : ''} sheen-host block bg-carbon-2 border border-line rounded-card px-4 md:px-6 py-3.5 md:py-4 transition-all duration-500 hover:-translate-y-1 ${m.lux ? 'hover:border-[rgba(230,201,126,.5)]' : 'hover:border-[rgba(69,240,166,.4)]'} ${MEMBERSHIPS_URL ? 'cursor-pointer' : ''}`}
+                  className={`${m.highlighted || m.lux ? 'conic-ring' : ''} ${m.lux ? 'ring-lux' : ''} sheen-host block bg-carbon-2 border border-line rounded-card px-4 md:px-6 py-3.5 md:py-4 cursor-pointer transition-all duration-500 hover:-translate-y-1 ${m.lux ? 'hover:border-[rgba(230,201,126,.5)]' : 'hover:border-[rgba(69,240,166,.4)]'}`}
                   data-reveal
                   style={{ '--i': i + 2 } as React.CSSProperties}
                 >
@@ -239,6 +321,15 @@ export default function Pricing() {
                   </div>
                 </MembershipCard>
               ))}
+            </div>
+
+            <div className="mt-4" aria-live="polite">
+              <SelectionCTA
+                href={membershipHref}
+                label={selectedMembershipDetails ? `Continue — ${selectedMembershipDetails.tier} ${selectedMembershipDetails.price}${selectedMembershipDetails.unit}` : ''}
+                emptyLabel="Select a membership above"
+                location={`membership-${selectedMembership?.toLowerCase().replaceAll(' ', '-') || 'unselected'}-continue`}
+              />
             </div>
 
             {/* Guest policy */}
