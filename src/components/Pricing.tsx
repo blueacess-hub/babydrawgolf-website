@@ -44,6 +44,21 @@ function RateRow({ selected, onSelect, className, label, children }: {
   );
 }
 
+function SelectionMark({ selected }: { selected: boolean }) {
+  return (
+    <span
+      className={`inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
+        selected
+          ? 'scale-100 border-trace bg-trace text-carbon-0 shadow-[0_0_14px_rgba(69,240,166,.65)]'
+          : 'scale-90 border-[rgba(170,191,179,.35)] bg-[rgba(7,9,8,.55)] text-transparent'
+      }`}
+      aria-hidden="true"
+    >
+      <Check className="h-3 w-3" strokeWidth={3} />
+    </span>
+  );
+}
+
 type MembershipCardProps = {
   selected: boolean;
   onSelect: () => void;
@@ -62,7 +77,7 @@ function MembershipCard({ selected, onSelect, location, className, style, childr
       aria-label={`Select ${location.replace('membership-', '')} membership`}
       className={`${className} relative w-full text-left ${
         selected
-          ? 'bg-[rgba(69,240,166,.10)] border-[rgba(69,240,166,.65)] shadow-[0_0_0_1px_rgba(69,240,166,.18),var(--shadow-card)]'
+          ? 'border-trace !bg-[rgba(69,240,166,.16)] shadow-[0_0_0_2px_rgba(69,240,166,.45),0_0_32px_-8px_rgba(69,240,166,.85),inset_0_0_26px_rgba(69,240,166,.08)]'
           : ''
       }`}
       style={style}
@@ -251,22 +266,26 @@ export default function Pricing() {
               type="button"
               onClick={() => setSelectedMembership('Founding 25')}
               aria-pressed={selectedMembership === 'Founding 25'}
+              aria-label="Select Founding 25 membership"
               className={`conic-ring relative block w-full text-left bg-[rgba(69,240,166,.07)] border rounded-card px-4 md:px-6 py-3 mb-3 transition-all duration-300 ${
                 selectedMembership === 'Founding 25'
-                  ? 'border-trace bg-[rgba(69,240,166,.13)] shadow-[0_0_0_1px_rgba(69,240,166,.18),var(--shadow-card)]'
+                  ? 'border-trace bg-[rgba(69,240,166,.16)] shadow-[0_0_0_2px_rgba(69,240,166,.45),0_0_32px_-8px_rgba(69,240,166,.85),inset_0_0_26px_rgba(69,240,166,.08)]'
                   : 'border-[rgba(69,240,166,.35)] hover:bg-[rgba(69,240,166,.11)]'
               }`}
               data-reveal
               style={{ '--i': 1 } as React.CSSProperties}
             >
               <div className="flex items-center justify-between gap-3">
-                <div>
-                  <p className="font-data text-[10px] md:text-[11px] font-medium tracking-[.18em] text-trace uppercase">
-                    Founding 25 — Pre-Opening Only
-                  </p>
-                  <p className="mt-1 text-xs md:text-[13px] text-ink-body font-normal">
-                    Eagle benefits, <strong className="text-ink">locked for life</strong>. 25 spots. Pre-opening payments credit toward future dues.
-                  </p>
+                <div className="flex min-w-0 items-start gap-2.5">
+                  <SelectionMark selected={selectedMembership === 'Founding 25'} />
+                  <div>
+                    <p className="font-data text-[10px] md:text-[11px] font-medium tracking-[.18em] text-trace uppercase">
+                      Founding 25 — Pre-Opening Only
+                    </p>
+                    <p className="mt-1 text-xs md:text-[13px] text-ink-body font-normal">
+                      Eagle benefits, <strong className="text-ink">locked for life</strong>. 25 spots. Pre-opening payments credit toward future dues.
+                    </p>
+                  </div>
                 </div>
                 <p className="shrink-0 font-data font-bold tabular-nums text-trace text-[24px] md:text-[28px] leading-none">
                   $149<span className="text-[11px] md:text-xs font-medium text-ink-mute">/mo</span>
@@ -290,6 +309,7 @@ export default function Pricing() {
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
+                      <SelectionMark selected={selectedMembership === m.tier} />
                       <span className={`font-display font-semibold uppercase tracking-wide text-lg md:text-[22px] ${m.lux ? 'tier-lux' : 'text-trace-soft'}`}>
                         {m.tier}
                       </span>
