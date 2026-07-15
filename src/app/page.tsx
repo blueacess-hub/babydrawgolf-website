@@ -13,12 +13,12 @@ import ChatButton from '@/components/ChatButton';
 import FlightLineNav from '@/components/fx/FlightLineNav';
 
 const sections = [
-  { id: 'hero', label: 'Home' },
-  { id: 'our-story', label: 'Our Story' },
-  { id: 'simulator', label: 'Simulator' },
-  { id: 'pricing', label: 'Pricing' },
-  { id: 'how-it-works', label: 'How It Works' },
-  { id: 'location', label: 'Location' },
+  { id: 'hero', label: 'Home', tone: 'hero' },
+  { id: 'our-story', label: 'Our Story', tone: 'story' },
+  { id: 'simulator', label: 'Simulator', tone: 'technology' },
+  { id: 'pricing', label: 'Pricing', tone: 'membership' },
+  { id: 'how-it-works', label: 'How It Works', tone: 'process' },
+  { id: 'location', label: 'Location', tone: 'location' },
 ];
 
 const MOBILE_QUERY = '(max-width: 767px)';
@@ -141,7 +141,20 @@ export default function Home() {
     const update = () => {
       raf = 0;
       if (!media.matches) return;
-      const anchor = window.innerHeight * 0.32;
+      const viewportHeight = window.innerHeight;
+      const anchor = viewportHeight * 0.32;
+      const scrollRange = Math.max(document.documentElement.scrollHeight - viewportHeight, 1);
+      const pageProgress = Math.min(Math.max(window.scrollY / scrollRange, 0), 1);
+      const rootStyle = document.documentElement.style;
+
+      // One rAF drives the fixed stage and section light washes. These are
+      // transform/opacity-only writes, so the vertical document stays native
+      // and iOS never has to arbitrate a second gesture surface.
+      rootStyle.setProperty('--page-progress', pageProgress.toFixed(4));
+      rootStyle.setProperty('--stage-shift-x', `${(-18 + pageProgress * 36).toFixed(2)}px`);
+      rootStyle.setProperty('--stage-shift-y', `${(pageProgress * 72).toFixed(2)}px`);
+      rootStyle.setProperty('--stage-rotate', `${(-7 + pageProgress * 18).toFixed(2)}deg`);
+
       let best = 0;
       let bestDistance = Infinity;
       cardsRef.current.forEach((card, index) => {
@@ -154,6 +167,11 @@ export default function Home() {
           best = index;
           bestDistance = distance;
         }
+
+        const presence = Math.max(0, Math.min(1, 1 - distance / (viewportHeight * 0.72)));
+        const localProgress = Math.max(0, Math.min(1, (anchor - rect.top) / Math.max(rect.height, 1)));
+        card.style.setProperty('--section-presence', presence.toFixed(3));
+        card.style.setProperty('--section-progress', localProgress.toFixed(3));
       });
       setActiveIndex(best);
       markVisited(best);
@@ -262,6 +280,23 @@ export default function Home() {
       {/* Continuity light field behind the whole deck */}
       <div className="aurora-field" aria-hidden="true" />
 
+      {/* Mobile keeps one continuous cinematic stage behind every chapter.
+          The atmosphere changes by motion and position, not hard background
+          cuts, so portrait scrolling reads as one product story. */}
+      <div
+        className="mobile-cinema-stage"
+        data-tone={sections[activeIndex]?.tone}
+        aria-hidden="true"
+      >
+        <span className="mobile-cinema-stage__orb mobile-cinema-stage__orb--primary" />
+        <span className="mobile-cinema-stage__orb mobile-cinema-stage__orb--secondary" />
+        <span className="mobile-cinema-stage__arc" />
+      </div>
+
+      <div className="mobile-scroll-progress" aria-hidden="true">
+        <span />
+      </div>
+
       <Navbar activeSection={sections[activeIndex]?.id} />
 
       <div ref={scrollRef} className="horizontal-scroll">
@@ -270,6 +305,7 @@ export default function Home() {
             key={sections[i].id}
             ref={(el) => { cardsRef.current[i] = el; }}
             className="section-card vignette"
+            data-tone={sections[i].tone}
             data-active={i === activeIndex}
             data-visited="false"
           >

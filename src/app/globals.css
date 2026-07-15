@@ -62,6 +62,10 @@
 @media (max-width: 767px) {
   :root {
     --glow-cta: 0 6px 20px -8px rgba(69, 240, 166, .3);
+    --page-progress: 0;
+    --stage-shift-x: -18px;
+    --stage-shift-y: 0px;
+    --stage-rotate: -7deg;
     /* Portrait crops put the bright sim screen mid-frame — darken harder */
     --scrim-hero: linear-gradient(180deg, rgba(11, 14, 12, .45) 0%, rgba(11, 14, 12, .55) 45%, rgba(11, 14, 12, .85) 72%, rgba(11, 14, 12, .97) 100%);
   }
@@ -202,6 +206,9 @@ h1, h2 {
   }
 
   .section-card {
+    --section-presence: 0;
+    --section-progress: 0;
+    --chapter-glow: rgba(69, 240, 166, .12);
     width: 100%;
     min-width: 0;
     height: auto;
@@ -210,6 +217,49 @@ h1, h2 {
     overscroll-behavior: auto;
     scroll-snap-align: none;
     scroll-margin-top: 3.5rem;
+    isolation: isolate;
+    background: transparent;
+  }
+
+  .section-card[data-tone="story"] {
+    --chapter-glow: rgba(78, 171, 119, .12);
+  }
+
+  .section-card[data-tone="technology"] {
+    --chapter-glow: rgba(61, 175, 161, .13);
+  }
+
+  .section-card[data-tone="membership"] {
+    --chapter-glow: rgba(201, 178, 113, .09);
+  }
+
+  .section-card[data-tone="process"] {
+    --chapter-glow: rgba(105, 130, 206, .10);
+  }
+
+  .section-card[data-tone="location"] {
+    --chapter-glow: rgba(69, 240, 166, .11);
+  }
+
+  /* Each chapter contributes a broad, overlapping light wash. Its opacity is
+     scroll-linked in page.tsx; the shared stage below remains uninterrupted. */
+  .section-card::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -22svh;
+    left: 0;
+    width: 100%;
+    height: 78svh;
+    pointer-events: none;
+    opacity: calc(.2 + var(--section-presence) * .8);
+    transform: translate3d(0, calc((var(--section-progress) - .5) * -46px), 0) scale(calc(.96 + var(--section-presence) * .04));
+    transform-origin: 50% 35%;
+    background: radial-gradient(ellipse 74% 58% at 50% 35%, var(--chapter-glow), transparent 72%);
+  }
+
+  .section-card[data-active="true"]::before {
+    will-change: transform, opacity;
   }
 
   .section-card > section {
@@ -264,6 +314,131 @@ h1, h2 {
     radial-gradient(38vw 30vh at 88% 12%, rgba(69, 240, 166, .06), transparent 60%),
     radial-gradient(46vw 36vh at 130% 80%, rgba(45, 106, 79, .16), transparent 62%),
     linear-gradient(180deg, #0B0E0C, #080B09);
+}
+
+/* Mobile portrait stage — stable black canvas with two transform-only lights.
+   Tone changes move the lights instead of replacing the background, which
+   keeps section boundaries visually continuous and paint cost predictable. */
+.mobile-cinema-stage,
+.mobile-scroll-progress {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .aurora-field::before {
+    width: 100%;
+    transform: none;
+    background:
+      radial-gradient(115vw 70vh at 50% -8%, rgba(45, 106, 79, .17), transparent 68%),
+      linear-gradient(180deg, #090c0a 0%, #070908 44%, #090b0a 100%);
+  }
+
+  .mobile-cinema-stage {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    contain: strict;
+  }
+
+  .mobile-cinema-stage__orb,
+  .mobile-cinema-stage__arc {
+    position: absolute;
+    display: block;
+    pointer-events: none;
+    will-change: transform, opacity;
+    transition: transform 1.25s var(--ease-hud), opacity 1.25s var(--ease-hud);
+  }
+
+  .mobile-cinema-stage__orb {
+    border-radius: 50%;
+  }
+
+  .mobile-cinema-stage__orb--primary {
+    width: 118vw;
+    height: 118vw;
+    left: -62vw;
+    top: 18svh;
+    opacity: .62;
+    background: radial-gradient(circle, rgba(45, 106, 79, .22) 0%, rgba(45, 106, 79, .08) 44%, transparent 70%);
+    transform: translate3d(var(--stage-shift-x), var(--stage-shift-y), 0) scale(1);
+  }
+
+  .mobile-cinema-stage__orb--secondary {
+    width: 92vw;
+    height: 92vw;
+    right: -50vw;
+    bottom: 8svh;
+    opacity: .44;
+    background: radial-gradient(circle, rgba(104, 178, 151, .15) 0%, rgba(44, 104, 83, .06) 48%, transparent 72%);
+    transform: translate3d(calc(var(--stage-shift-x) * -.55), calc(var(--stage-shift-y) * -.45), 0) scale(.96);
+  }
+
+  .mobile-cinema-stage__arc {
+    width: 136vw;
+    height: 78svh;
+    left: -74vw;
+    top: 15svh;
+    border: 1px solid rgba(125, 245, 191, .10);
+    border-right-color: rgba(125, 245, 191, .22);
+    border-radius: 50%;
+    opacity: .62;
+    transform: translate3d(calc(var(--stage-shift-x) * .35), calc(var(--stage-shift-y) * -.2), 0) rotate(var(--stage-rotate));
+  }
+
+  .mobile-cinema-stage[data-tone="story"] .mobile-cinema-stage__orb--primary {
+    transform: translate3d(calc(var(--stage-shift-x) + 32px), calc(var(--stage-shift-y) - 8px), 0) scale(1.08);
+  }
+
+  .mobile-cinema-stage[data-tone="technology"] .mobile-cinema-stage__orb--primary {
+    transform: translate3d(calc(var(--stage-shift-x) + 58px), calc(var(--stage-shift-y) + 12px), 0) scale(.92);
+  }
+
+  .mobile-cinema-stage[data-tone="membership"] .mobile-cinema-stage__orb--secondary {
+    opacity: .66;
+    transform: translate3d(calc(var(--stage-shift-x) * -.2), calc(var(--stage-shift-y) * -.3 - 36px), 0) scale(1.12);
+  }
+
+  .mobile-cinema-stage[data-tone="process"] .mobile-cinema-stage__arc {
+    opacity: .82;
+    transform: translate3d(calc(var(--stage-shift-x) * .35 + 34px), calc(var(--stage-shift-y) * -.2), 0) rotate(calc(var(--stage-rotate) + 9deg));
+  }
+
+  .mobile-cinema-stage[data-tone="location"] .mobile-cinema-stage__orb--primary {
+    transform: translate3d(calc(var(--stage-shift-x) + 76px), calc(var(--stage-shift-y) - 28px), 0) scale(1.16);
+  }
+
+  .mobile-scroll-progress {
+    display: block;
+    position: fixed;
+    z-index: 55;
+    top: calc(3.5rem - 1px);
+    left: 0;
+    right: 0;
+    height: 2px;
+    overflow: hidden;
+    pointer-events: none;
+    background: rgba(213, 255, 229, .06);
+  }
+
+  .mobile-scroll-progress > span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform: scaleX(var(--page-progress));
+    transform-origin: left center;
+    background: linear-gradient(90deg, rgba(69, 240, 166, .45), #7DF5BF);
+    box-shadow: 0 0 12px rgba(69, 240, 166, .45);
+    will-change: transform;
+  }
+
+  /* The parent stage owns edge falloff on portrait. Keeping the old per-card
+     vignette here would redraw a dark frame at every chapter boundary. */
+  .vignette::after {
+    display: none;
+  }
 }
 
 /* Film grain — fixed so it reads as lens, not texture, during deck panning.
@@ -394,6 +569,25 @@ html[data-js] .section-card[data-visited="true"] [data-reveal] {
 }
 @keyframes revealUp {
   from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 767px) {
+  html[data-js] .section-card [data-reveal] {
+    transform: translateY(38px) scale(.975);
+    transform-origin: 50% 70%;
+  }
+
+  html[data-js] .section-card[data-visited="true"] [data-reveal] {
+    animation-name: revealStage;
+    animation-duration: 1.05s;
+    animation-delay: calc(var(--i, 0) * 105ms);
+  }
+}
+
+@keyframes revealStage {
+  from { opacity: 0; transform: translateY(38px) scale(.975); }
+  58% { opacity: 1; }
   to { opacity: 1; transform: none; }
 }
 /* Dead-man floor (armed by the layout.tsx inline script, disarmed by React
@@ -689,5 +883,17 @@ html[data-reveal-all] .tracer-scene .tracer-apex {
   }
   .room-dim {
     opacity: 0 !important;
+  }
+
+  .mobile-cinema-stage__orb,
+  .mobile-cinema-stage__arc,
+  .section-card::before {
+    transition: none !important;
+    will-change: auto !important;
+  }
+
+  .section-card::before {
+    opacity: .5;
+    transform: none;
   }
 }
