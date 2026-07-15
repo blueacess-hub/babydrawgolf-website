@@ -779,9 +779,9 @@ html[data-reveal-all] .tracer-scene .tracer-apex {
 }
 
 .membership-choice[aria-pressed="true"] .membership-choice__mark {
-  border-color: var(--color-trace);
-  color: var(--color-carbon-0);
-  background: var(--color-trace);
+  border-color: var(--color-trace) !important;
+  color: var(--color-carbon-0) !important;
+  background-color: var(--color-trace) !important;
   box-shadow: 0 0 14px rgba(69, 240, 166, .65);
   transform: scale(1);
 }
