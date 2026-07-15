@@ -118,14 +118,14 @@ export default function Hero({ active = true }: { active?: boolean }) {
         </div>
       </div>
 
-      {/* Mobile swipe cue */}
+      {/* Mobile vertical-scroll cue */}
       <div
         className="md:hidden absolute right-4 bottom-[calc(27px+env(safe-area-inset-bottom))] z-10 font-data text-[10px] tracking-[.2em] text-ink-mute uppercase pointer-events-none"
         aria-hidden="true"
       >
-        Swipe{' '}
-        <span className="amb inline-block" style={{ animation: 'swipeNudge 2s ease-in-out infinite' }}>
-          →
+        Scroll{' '}
+        <span className="amb inline-block" style={{ animation: 'scrollNudge 2s ease-in-out infinite' }}>
+          ↓
         </span>
       </div>
     </section>

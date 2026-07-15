@@ -171,6 +171,63 @@ h1, h2 {
   }
 }
 
+/* Mobile is a conventional vertical document. The horizontal deck remains a
+   desktop-only interaction: nesting one x-scroller around six independent
+   y-scrollers made iOS Safari arbitrate every slightly diagonal finger pan,
+   retain stale scroll offsets through bfcache, and occasionally land between
+   snap cards. A single document scroller removes that entire failure mode. */
+@media (max-width: 767px) {
+  html {
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-behavior: auto;
+  }
+
+  body {
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+
+  .horizontal-scroll {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    scroll-snap-type: none;
+    -webkit-overflow-scrolling: auto;
+  }
+
+  .section-card {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+    overscroll-behavior: auto;
+    scroll-snap-align: none;
+    scroll-margin-top: 3.5rem;
+  }
+
+  .section-card > section {
+    min-height: 100svh;
+  }
+
+  .room-dim,
+  .desktop-flightline {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .desktop-flightline {
+    display: block;
+  }
+}
+
 .fixed-bottom-safe {
   bottom: calc(0.75rem + env(safe-area-inset-bottom));
 }
@@ -428,9 +485,9 @@ html[data-reveal-all] .tracer-scene .tracer-apex {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: none; }
 }
-@keyframes swipeNudge {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(6px); }
+@keyframes scrollNudge {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
 }
 @keyframes chatPanelIn {
   from { opacity: 0; transform: translateY(24px) scale(.98); }

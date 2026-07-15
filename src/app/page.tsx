@@ -21,6 +21,8 @@ const sections = [
   { id: 'location', label: 'Location' },
 ];
 
+const MOBILE_QUERY = '(max-width: 767px)';
+
 export default function Home() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -33,6 +35,15 @@ export default function Home() {
   }, []);
 
   const scrollToIndex = useCallback((index: number) => {
+    if (window.matchMedia(MOBILE_QUERY).matches) {
+      const card = cardsRef.current[index];
+      if (!card) return;
+      markVisited(index);
+      setActiveIndex(index);
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+
     const el = scrollRef.current;
     if (!el) return;
     const target = index * el.clientWidth;
@@ -48,7 +59,7 @@ export default function Home() {
         el.scrollLeft = target;
       }
     });
-  }, []);
+  }, [markVisited]);
 
   // The deck must ALWAYS open on the hero. Browsers — mobile Safari most
   // aggressively — restore the horizontal scrollLeft of this overflow
@@ -59,19 +70,48 @@ export default function Home() {
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     const home = () => {
       const el = scrollRef.current;
-      if (el && el.scrollLeft !== 0) el.scrollLeft = 0;
+      cardsRef.current.forEach((card) => {
+        if (card && card.scrollTop !== 0) card.scrollTop = 0;
+      });
+      if (window.matchMedia(MOBILE_QUERY).matches) {
+        if (window.scrollX !== 0 || window.scrollY !== 0) {
+          window.scrollTo({ left: 0, top: 0, behavior: 'auto' });
+        }
+      } else if (el && el.scrollLeft !== 0) {
+        el.scrollLeft = 0;
+      }
       document.documentElement.style.setProperty('--deck-x', '0px');
     };
-    home();
-    // Some engines restore the position only after mount / first paint.
-    requestAnimationFrame(home);
-    const onLoad = () => home();
+
+    let settleFrame = 0;
+    let settleFrame2 = 0;
+    let lateReset = 0;
+    const settleHome = () => {
+      home();
+      cancelAnimationFrame(settleFrame);
+      cancelAnimationFrame(settleFrame2);
+      settleFrame = requestAnimationFrame(() => {
+        settleFrame2 = requestAnimationFrame(home);
+      });
+      window.clearTimeout(lateReset);
+      lateReset = window.setTimeout(home, 120);
+    };
+
+    settleHome();
+    // iOS can restore nested overflow state after mount / first paint.
+    const onLoad = () => settleHome();
     const onShow = (e: PageTransitionEvent) => {
-      if (e.persisted) { home(); setActiveIndex(0); } // bfcache restore
+      if (e.persisted) {
+        settleHome();
+        setActiveIndex(0);
+      }
     };
     window.addEventListener('load', onLoad);
     window.addEventListener('pageshow', onShow);
     return () => {
+      cancelAnimationFrame(settleFrame);
+      cancelAnimationFrame(settleFrame2);
+      window.clearTimeout(lateReset);
       window.removeEventListener('load', onLoad);
       window.removeEventListener('pageshow', onShow);
     };
@@ -91,6 +131,50 @@ export default function Home() {
     return () => container.removeEventListener('scroll', handleScroll);
   }, [markVisited]);
 
+  // Mobile uses one normal document scroller. Track the section nearest the
+  // top third of the viewport so the navbar and animation gates stay in sync
+  // without nesting a vertical scroller inside the horizontal deck.
+  useEffect(() => {
+    const media = window.matchMedia(MOBILE_QUERY);
+    let raf = 0;
+
+    const update = () => {
+      raf = 0;
+      if (!media.matches) return;
+      const anchor = window.innerHeight * 0.32;
+      let best = 0;
+      let bestDistance = Infinity;
+      cardsRef.current.forEach((card, index) => {
+        if (!card) return;
+        const rect = card.getBoundingClientRect();
+        const distance = rect.top <= anchor && rect.bottom > anchor
+          ? 0
+          : Math.min(Math.abs(rect.top - anchor), Math.abs(rect.bottom - anchor));
+        if (distance < bestDistance) {
+          best = index;
+          bestDistance = distance;
+        }
+      });
+      setActiveIndex(best);
+      markVisited(best);
+    };
+
+    const schedule = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    media.addEventListener('change', schedule);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      media.removeEventListener('change', schedule);
+    };
+  }, [markVisited]);
+
   // React is alive: disarm the inline-script dead-man floor (layout.tsx) —
   // per-card reveals take over from here.
   useEffect(() => {
@@ -106,16 +190,26 @@ export default function Home() {
   useEffect(() => {
     const root = scrollRef.current;
     if (!root || typeof IntersectionObserver === 'undefined') return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) (e.target as HTMLElement).dataset.visited = 'true';
-        });
-      },
-      { root, threshold: 0.15 }
-    );
-    cardsRef.current.forEach((el) => el && io.observe(el));
-    return () => io.disconnect();
+    const media = window.matchMedia(MOBILE_QUERY);
+    let io: IntersectionObserver | null = null;
+    const observe = () => {
+      io?.disconnect();
+      io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) (e.target as HTMLElement).dataset.visited = 'true';
+          });
+        },
+        { root: media.matches ? null : root, threshold: 0.15 }
+      );
+      cardsRef.current.forEach((el) => el && io?.observe(el));
+    };
+    observe();
+    media.addEventListener('change', observe);
+    return () => {
+      media.removeEventListener('change', observe);
+      io?.disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -201,13 +295,15 @@ export default function Home() {
         <ChevronRight className="w-5 h-5" />
       </button>
 
-      {/* FlightLine — the deck is a golf shot */}
-      <FlightLineNav
-        sections={sections}
-        activeIndex={activeIndex}
-        onSelect={scrollToIndex}
-        scrollRef={scrollRef}
-      />
+      {/* FlightLine — desktop keeps the horizontal golf-shot navigation. */}
+      <div className="desktop-flightline">
+        <FlightLineNav
+          sections={sections}
+          activeIndex={activeIndex}
+          onSelect={scrollToIndex}
+          scrollRef={scrollRef}
+        />
+      </div>
 
       <ChatButton />
 
