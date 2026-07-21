@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Oswald, Roboto_Mono } from 'next/font/google';
 import Script from 'next/script';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import faqData from '@/data/faq.json';
 
@@ -154,6 +155,7 @@ export default function RootLayout({
       </head>
       <body className="h-full overflow-hidden font-sans">
         {children}
+        <Analytics />
 
         {/* Google Analytics 4 */}
         {GA_ID && (
