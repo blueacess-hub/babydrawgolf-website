@@ -352,7 +352,7 @@ export default function Pricing() {
               </p>
             </div>
             <p className="mt-2.5 text-[10px] md:text-[11px] text-ink-mute/80 text-center font-normal" data-reveal style={{ '--i': 5 } as React.CSSProperties}>
-              Priority booking &amp; 24/7 access. Cancel anytime. Ace capped at 15 members to keep bays available.
+              Priority booking &amp; 24/7 access. Month-to-month after a 12-month initial term. Ace capped at 15 members to keep bays available.
             </p>
           </div>
         </div>

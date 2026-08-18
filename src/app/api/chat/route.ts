@@ -38,12 +38,13 @@ HOURLY PRICING (per bay, up to 4 players — split it with friends and it's from
 - Standard (Mon–Thu 4pm–midnight): $50/hr
 - Peak (Fri 4pm–midnight + Sat–Sun 6am–midnight): $55/hr
 
-MEMBERSHIPS (all: priority booking, 24/7 access, cancel anytime):
+MEMBERSHIPS (all: priority booking, 24/7 access; month-to-month after a 12-month initial term):
 - **Founding 25 — pre-opening only: $149/mo, first 25 members only.** Eagle benefits (15 hrs/month) with the rate locked for life while the membership stays active. When 25 spots are gone, it's gone.
 - Birdie: $99/mo — 8 hrs included, $30/hr additional
 - Eagle: $179/mo — 15 hrs included, $30/hr additional (Best Value)
 - Ace: $249/mo — unlimited play in 3-hr sessions, one active booking at a time, free guests anytime. Capped at 15 members total to keep bays available.
 - HOW MEMBER BOOKING WORKS: Birdie/Eagle/Founding 25 members book the **Member Bay Time** option on the booking site — monthly included hours apply automatically ($0 at checkout); once they're used up, additional time is a flat **$30/hr** at any time of day. Ace members book the **Ace Unlimited** option ($0, sessions up to 3 hours, one upcoming booking at a time).
+- MEMBERSHIP TERM: every membership has a 12-month initial commitment, then continues month-to-month and can be cancelled anytime by emailing info@babydrawgolf.net. Early termination during the initial term has a fee — for specifics, connect them with the team.
 
 EQUIPMENT & HOUSE RULES:
 - Bring your own clubs, or rent a full set on-site: $25 per person
