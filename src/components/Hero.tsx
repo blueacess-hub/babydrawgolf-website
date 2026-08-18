@@ -73,7 +73,7 @@ export default function Hero({ active = true }: { active?: boolean }) {
             <span aria-hidden="true">·</span>
             <span>
               <span className="hidden min-[430px]:inline">Bridgeland · </span>
-              Cypress TX — Opening Mid-August
+              Cypress TX — Opening August 26
             </span>
           </div>
 
@@ -85,7 +85,7 @@ export default function Hero({ active = true }: { active?: boolean }) {
             Your Private Golf Bay.
             <br />
             <span className="text-trace" style={{ textShadow: 'var(--glow-text)' }}>
-              Opening Mid-August.
+              Opening August 26.
             </span>
           </h1>
 
@@ -95,7 +95,7 @@ export default function Hero({ active = true }: { active?: boolean }) {
             style={{ '--i': 2 } as React.CSSProperties}
           >
             Three private bays. Tour-level Trackman iO. Sign up now for
-            priority access before we open in mid-August 2026. 24/7
+            priority access before we open on August 26, 2026. 24/7
             self-service access after launch.
           </p>
 
@@ -104,7 +104,7 @@ export default function Hero({ active = true }: { active?: boolean }) {
             data-reveal
             style={{ '--i': 3 } as React.CSSProperties}
           >
-            Expected opening: mid-August 2026
+            Grand opening: August 26, 2026
           </p>
 
           <div className="mt-5 md:mt-8" data-reveal style={{ '--i': 4 } as React.CSSProperties}>

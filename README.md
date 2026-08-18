@@ -55,6 +55,22 @@ Update these JSON files to change content without touching components:
 4. Add custom domain `babydrawgolf.net` in Vercel
 5. Update Namecheap DNS: CNAME -> `cname.vercel-dns.com`
 
+## Read-only Vercel traffic check
+
+Use the supported Vercel Web Analytics API without opening the dashboard:
+
+```bash
+node scripts/vercel-analytics.mjs --days 7
+node scripts/vercel-analytics.mjs --days 30 --json
+```
+
+The script queries only `babydrawgolf-website` and never writes to Vercel. It requires a Vercel Access Token with read access to the project. Keep the token out of source code:
+
+- For one terminal session, set `BDG_VERCEL_TOKEN` using your shell's hidden-input command.
+- For repeat use on macOS, save it in Keychain Access with service name `Baby Draw Golf Vercel Analytics API`; the script reads that item without printing it.
+
+Use `--help` to pass an exact date range or an official Vercel filter expression.
+
 ## SEO
 
 Includes:
