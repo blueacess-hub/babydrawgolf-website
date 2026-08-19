@@ -39,17 +39,49 @@ export default function Navbar({ activeSection }: { activeSection?: string }) {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14 lg:h-16">
-          <button onClick={() => goTo('hero')} className="flex items-center cursor-pointer" aria-label="Home">
+        <div className="flex items-center h-14 lg:h-16">
+          <button onClick={() => goTo('hero')} className="flex items-center shrink-0 cursor-pointer" aria-label="Home">
             <Logo color="white" height={40} className="h-8 lg:h-10 w-auto" />
           </button>
 
-          <div className="hidden md:flex items-center gap-6 lg:gap-7">
+          {/* Live chapter readout lives inside the navbar so it never covers
+              page content. Tablet widths use the menu to preserve spacing. */}
+          <div
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            className="hud-chip pointer-events-none ml-auto lg:ml-6 xl:ml-10 min-w-[142px] lg:min-w-[148px] xl:min-w-[170px] px-2.5 xl:px-3 py-1.5 bg-[rgba(7,9,8,.62)]"
+          >
+            <span className="sr-only">
+              Section {activeIndex + 1} of {sections.length}: {currentSection.label}
+            </span>
+            <div className="flex items-center justify-between gap-2 font-data uppercase" aria-hidden="true">
+              <span className="tabular-nums whitespace-nowrap">
+                <span className="font-bold text-[10px] xl:text-[11px] text-trace-soft">
+                  {String(activeIndex + 1).padStart(2, '0')}
+                </span>
+                <span className="text-[8px] xl:text-[9px] text-ink-mute">
+                  {' '} / {String(sections.length).padStart(2, '0')}
+                </span>
+              </span>
+              <span className="text-[8px] xl:text-[9px] font-medium tracking-[.11em] text-ink whitespace-nowrap">
+                {currentSection.label}
+              </span>
+            </div>
+            <div className="mt-1 h-px overflow-hidden bg-[rgba(213,255,229,.12)]" aria-hidden="true">
+              <span
+                className="block h-full bg-trace shadow-[0_0_8px_rgba(69,240,166,.65)] transition-[width] duration-500"
+                style={{ width: `${sectionProgress}%` }}
+              />
+            </div>
+          </div>
+
+          <div className="hidden lg:flex items-center gap-4 xl:gap-7 ml-auto">
             {navLinks.map((link) => (
               <button
                 key={link.id}
                 onClick={() => goTo(link.id)}
-                className={`relative font-data text-[12px] font-medium uppercase tracking-[.12em] transition-colors cursor-pointer py-1 ${
+                className={`relative font-data text-[11px] xl:text-[12px] font-medium uppercase tracking-[.12em] transition-colors cursor-pointer py-1 ${
                   activeSection === link.id ? 'text-trace-soft' : 'text-ink-mute hover:text-ink'
                 }`}
               >
@@ -77,7 +109,7 @@ export default function Navbar({ activeSection }: { activeSection?: string }) {
 
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden text-ink p-2 cursor-pointer"
+            className="lg:hidden text-ink p-2 ml-2 cursor-pointer"
             aria-label="Toggle menu"
           >
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -85,47 +117,8 @@ export default function Navbar({ activeSection }: { activeSection?: string }) {
         </div>
       </div>
 
-      {/* Persistent chapter readout — mirrors the golf HUD language and makes
-          the current card unambiguous while swiping or scrolling. */}
-      <div
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
-        className={`pointer-events-none absolute right-3 sm:right-6 lg:right-8 top-[calc(100%+0.5rem)] transition-[opacity,transform] duration-300 ${
-          mobileOpen ? 'opacity-0 -translate-y-1 md:opacity-100 md:translate-y-0' : 'opacity-100 translate-y-0'
-        }`}
-      >
-        <span className="sr-only">
-          Section {activeIndex + 1} of {sections.length}: {currentSection.label}
-        </span>
-        <div
-          className="hud-chip min-w-[154px] md:min-w-[176px] px-3 py-2 bg-[rgba(7,9,8,.78)] backdrop-blur-[10px] shadow-[0_8px_30px_rgba(0,0,0,.28)]"
-          aria-hidden="true"
-        >
-          <div className="flex items-center justify-between gap-3 font-data uppercase">
-            <span className="tabular-nums whitespace-nowrap">
-              <span className="font-bold text-[11px] md:text-xs text-trace-soft">
-                {String(activeIndex + 1).padStart(2, '0')}
-              </span>
-              <span className="text-[9px] md:text-[10px] text-ink-mute">
-                {' '} / {String(sections.length).padStart(2, '0')}
-              </span>
-            </span>
-            <span className="text-[9px] md:text-[10px] font-medium tracking-[.13em] text-ink whitespace-nowrap">
-              {currentSection.label}
-            </span>
-          </div>
-          <div className="mt-1.5 h-px overflow-hidden bg-[rgba(213,255,229,.12)]">
-            <span
-              className="block h-full bg-trace shadow-[0_0_8px_rgba(69,240,166,.65)] transition-[width] duration-500"
-              style={{ width: `${sectionProgress}%` }}
-            />
-          </div>
-        </div>
-      </div>
-
       {mobileOpen && (
-        <div className="md:hidden bg-[rgba(7,11,9,.97)] border-b border-[var(--hairline)] absolute inset-x-0 top-14">
+        <div className="lg:hidden bg-[rgba(7,11,9,.97)] border-b border-[var(--hairline)] absolute inset-x-0 top-14">
           <div className="flex flex-col items-center gap-5 py-6">
             {navLinks.map((link) => (
               <button
