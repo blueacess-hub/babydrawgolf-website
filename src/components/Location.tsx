@@ -4,6 +4,7 @@ import { MapPin, Clock, Car, Plus } from 'lucide-react';
 import { useState } from 'react';
 import faqData from '@/data/faq.json';
 import siteData from '@/data/site.json';
+import InstagramIcon from './InstagramIcon';
 import Logo from './Logo';
 
 export default function Location() {
@@ -137,7 +138,7 @@ export default function Location() {
 
       {/* Footer strip */}
       <div className="relative bg-[rgba(7,9,8,.8)] border-t border-[var(--hairline)] py-3 md:py-5 px-5 md:px-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-3">
           <div className="flex items-center gap-3 md:gap-5">
             <Logo color="white" height={22} className="md:h-8" />
             <span className="text-ink-mute font-data text-[10px] md:text-xs hidden sm:inline">{siteData.address.full}</span>
@@ -145,9 +146,21 @@ export default function Location() {
               {siteData.email}
             </a>
           </div>
-          <p className="text-ink-mute font-data text-xs">
-            &copy; {new Date().getFullYear()} {siteData.name}
-          </p>
+          <div className="flex items-center gap-4">
+            <a
+              href={siteData.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-trace-soft hover:text-trace transition-colors font-data text-[10px] md:text-xs"
+              aria-label="Follow BABYDRAW GOLF on Instagram"
+            >
+              <InstagramIcon className="w-4 h-4" />
+              @baby_drawgolf
+            </a>
+            <p className="text-ink-mute font-data text-[10px] md:text-xs">
+              &copy; {new Date().getFullYear()} {siteData.name}
+            </p>
+          </div>
         </div>
       </div>
     </section>

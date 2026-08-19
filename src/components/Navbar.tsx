@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import siteData from '@/data/site.json';
 import BookNowButton from './BookNowButton';
+import InstagramIcon from './InstagramIcon';
 import Logo from './Logo';
 
 const navLinks = [
@@ -54,6 +56,16 @@ export default function Navbar({ activeSection }: { activeSection?: string }) {
                 />
               </button>
             ))}
+            <a
+              href={siteData.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-ink-mute hover:text-trace-soft transition-colors p-1"
+              aria-label="Follow BABYDRAW GOLF on Instagram"
+              title="Instagram @baby_drawgolf"
+            >
+              <InstagramIcon className="w-[18px] h-[18px]" />
+            </a>
             <BookNowButton location="nav" size="sm" />
           </div>
 
@@ -84,6 +96,16 @@ export default function Navbar({ activeSection }: { activeSection?: string }) {
                 {link.label}
               </button>
             ))}
+            <a
+              href={siteData.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 font-data text-base font-medium uppercase tracking-[.12em] text-ink hover:text-trace-soft transition-colors"
+              aria-label="Follow BABYDRAW GOLF on Instagram"
+            >
+              <InstagramIcon className="w-5 h-5" />
+              Instagram
+            </a>
             <BookNowButton location="nav-mobile" size="md" />
           </div>
         </div>
