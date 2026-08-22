@@ -253,6 +253,16 @@ export default function Pricing() {
               Memberships
             </h3>
             <p className="font-data text-[10px] text-ink-mute mb-2">Select a membership, then continue to signup.</p>
+            <div
+              className="mb-3 flex items-start gap-2.5 rounded-card border border-[rgba(69,240,166,.28)] bg-[rgba(69,240,166,.06)] px-4 py-3"
+              data-reveal
+              style={{ '--i': 1 } as React.CSSProperties}
+            >
+              <Users className="mt-0.5 h-4 w-4 shrink-0 text-trace" aria-hidden="true" />
+              <p className="text-xs leading-relaxed text-ink-body md:text-[13px]">
+                <strong className="text-ink">Designed to stay uncrowded.</strong> Once membership reaches capacity, public bookings will close and Baby Draw Golf will become a members-only facility.
+              </p>
+            </div>
             {/* Founding 25 — pre-launch charter offer */}
             <button
               type="button"
