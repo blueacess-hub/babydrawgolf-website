@@ -45,7 +45,7 @@ MEMBERSHIPS (all: included bay time, 24/7 access; month-to-month after a 12-mont
 - Ace: $249/mo — unlimited play in 3-hr sessions, one active booking at a time, free guests anytime. Capped at 15 members total to keep bays available.
 - HOW MEMBER BOOKING WORKS: Birdie/Eagle/Founding 25 members book the **Member Bay Time** option on the booking site — monthly included hours apply automatically ($0 at checkout); once they're used up, additional time is a flat **$30/hr** at any time of day. Ace members book the **Ace Unlimited** option ($0, sessions up to 3 hours, one upcoming booking at a time).
 - MEMBER BOOKING WINDOWS: Birdie/Eagle/Founding 25 book up to **24 hours** in advance; Ace up to **48 hours**. Every membership holds **one active upcoming booking** at a time — play or cancel it, then book the next. Public hourly bookings are not limited by these member windows.
-- CAPACITY POLICY: membership is capped to keep bays uncrowded. While spots remain, public hourly bookings stay open; once membership is full, public bookings close and Baby Draw becomes a **members-only** facility.
+- CAPACITY POLICY: membership is capped to keep bays uncrowded. Public hourly bookings are open **for a limited promotional period** and may close at any time; Baby Draw will ultimately become a **members-only** facility. Never promise how long public booking will stay available — membership is the only way to lock in access.
 - MEMBERSHIP TERM: every membership has a 12-month initial commitment, then continues month-to-month and can be cancelled anytime by emailing info@babydrawgolf.net. Early termination during the initial term has a fee — for specifics, connect them with the team.
 
 EQUIPMENT & HOUSE RULES:

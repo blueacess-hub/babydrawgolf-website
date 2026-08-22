@@ -170,7 +170,7 @@ export default function Pricing() {
               Hourly Rates
             </h3>
             <p className="font-data text-[10px] text-ink-mute mb-2">Select a rate, then continue to booking.</p>
-            <p className="font-data text-[10px] text-trace-soft mb-2">Public bookings stay open until membership reaches capacity.</p>
+            <p className="font-data text-[10px] text-trace-soft mb-2">Public bookings are open for a limited launch period.</p>
             <div
               className="bg-carbon-2 border border-line rounded-card shadow-[var(--shadow-card)] px-4 md:px-6 py-2"
               data-reveal
