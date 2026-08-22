@@ -16,6 +16,10 @@
     "answer": "Yes, you can manage your bookings through the Trackman Golf App or the booking portal. Please check our cancellation policy for specific timeframes and any applicable fees."
   },
   {
+    "question": "How far in advance can I book?",
+    "answer": "Public hourly bookings can be made on the booking calendar anytime while public spots last. Members use a short rolling window that keeps bays available: Birdie, Eagle, and Founding 25 can book up to 24 hours ahead, Ace up to 48 hours ahead, and every membership holds one active upcoming booking at a time — play or cancel it, then book your next session."
+  },
+  {
     "question": "Is there food or drinks available?",
     "answer": "We are an unmanned facility, so we don't sell food or beverages on-site. You're welcome to bring your own drinks and snacks — just no glass containers, please."
   },
@@ -30,5 +34,9 @@
   {
     "question": "Is the facility safe at night?",
     "answer": "Absolutely. The facility features secure PIN-code entry, security cameras, and well-lit premises. Only booked customers can access the building during their reserved time slot."
+  },
+  {
+    "question": "Will Baby Draw stay open to the public?",
+    "answer": "For now, yes — public hourly bookings are open while membership spots remain. Membership is capped to keep the bays uncrowded, and once it's full, public bookings will close and Baby Draw will become a members-only facility. Joining now is the way to lock in access."
   }
 ]

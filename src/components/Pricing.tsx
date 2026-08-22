@@ -170,6 +170,7 @@ export default function Pricing() {
               Hourly Rates
             </h3>
             <p className="font-data text-[10px] text-ink-mute mb-2">Select a rate, then continue to booking.</p>
+            <p className="font-data text-[10px] text-trace-soft mb-2">Public bookings stay open until membership reaches capacity.</p>
             <div
               className="bg-carbon-2 border border-line rounded-card shadow-[var(--shadow-card)] px-4 md:px-6 py-2"
               data-reveal
@@ -260,7 +261,7 @@ export default function Pricing() {
             >
               <Users className="mt-0.5 h-4 w-4 shrink-0 text-trace" aria-hidden="true" />
               <p className="text-xs leading-relaxed text-ink-body md:text-[13px]">
-                <strong className="text-ink">Designed to stay uncrowded.</strong> Once membership reaches capacity, public bookings will close and Baby Draw Golf will become a members-only facility.
+                <strong className="text-ink">Designed to stay uncrowded.</strong> Membership is capped — once it&apos;s full, public bookings close and bays are reserved for members.
               </p>
             </div>
             {/* Founding 25 — pre-launch charter offer */}
@@ -362,7 +363,7 @@ export default function Pricing() {
               </p>
             </div>
             <p className="mt-2.5 text-[10px] md:text-[11px] text-ink-mute/80 text-center font-normal" data-reveal style={{ '--i': 5 } as React.CSSProperties}>
-              Priority booking &amp; 24/7 access. Month-to-month after a 12-month initial term. Ace capped at 15 members to keep bays available.
+              Included bay time &amp; 24/7 access. Month-to-month after a 12-month initial term. Ace capped at 15 members to keep bays available.
             </p>
           </div>
         </div>
