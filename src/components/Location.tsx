@@ -74,7 +74,7 @@ export default function Location() {
                   <Clock className="w-4 h-4 text-trace mt-0.5 shrink-0" />
                   <div>
                     <p className="font-display font-semibold uppercase tracking-wide text-ink text-xs md:text-[13px]">Hours</p>
-                    <p className="text-ink-mute text-xs md:text-[13px] font-normal">Opens August 26, then 24/7 self-service</p>
+                    <p className="text-ink-mute text-xs md:text-[13px] font-normal">Opens August 29, then 24/7 self-service</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">

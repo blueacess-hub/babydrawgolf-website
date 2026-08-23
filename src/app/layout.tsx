@@ -29,13 +29,13 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://babydrawgolf.net'),
   title: 'BABYDRAW GOLF | Indoor Golf Simulator in Cypress, TX',
   description:
-    'Private indoor golf simulator bay with Trackman iO technology in Cypress, Texas. Grand opening: August 26, 2026. Sign up now for priority access.',
+    'Private indoor golf simulator bay with Trackman iO technology in Cypress, Texas. Grand opening: August 29, 2026. Sign up now for priority access.',
   keywords:
     'indoor golf simulator, Cypress TX, Trackman simulator, 24/7 golf, golf simulator near me, virtual golf Cypress, babydraw golf',
   openGraph: {
     title: 'BABYDRAW GOLF | Indoor Golf Simulator in Cypress, TX',
     description:
-      'Private indoor golf simulator bay with Trackman iO technology. Grand opening: August 26, 2026 in Cypress, Texas.',
+      'Private indoor golf simulator bay with Trackman iO technology. Grand opening: August 29, 2026 in Cypress, Texas.',
     url: 'https://babydrawgolf.net',
     siteName: 'BABYDRAW GOLF',
     type: 'website',
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'BABYDRAW GOLF | Indoor Golf Simulator in Cypress, TX',
     description:
-      'Three private Trackman iO bays. Grand opening: August 26, 2026. Sign up now for priority access.',
+      'Three private Trackman iO bays. Grand opening: August 29, 2026. Sign up now for priority access.',
   },
   robots: {
     index: true,
@@ -69,7 +69,7 @@ function StructuredData() {
     '@type': 'SportsActivityLocation',
     name: 'BABYDRAW GOLF',
     description:
-      'Private indoor golf simulator bay with Trackman iO technology. Grand opening: August 26, 2026.',
+      'Private indoor golf simulator bay with Trackman iO technology. Grand opening: August 29, 2026.',
     url: 'https://babydrawgolf.net',
     telephone: '',
     email: 'info@babydrawgolf.net',
