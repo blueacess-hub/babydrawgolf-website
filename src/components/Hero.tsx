@@ -68,12 +68,12 @@ export default function Hero({ active = true }: { active?: boolean }) {
                 style={{ animation: 'liveDot 2s ease-in-out infinite' }}
                 aria-hidden="true"
               />
-              PRE-OPENING
+              OPEN 24/7
             </span>
             <span aria-hidden="true">·</span>
             <span>
               <span className="hidden min-[430px]:inline">Bridgeland · </span>
-              Cypress TX — Opening August 29
+              Cypress TX
             </span>
           </div>
 
@@ -85,7 +85,7 @@ export default function Hero({ active = true }: { active?: boolean }) {
             Your Private Golf Bay.
             <br />
             <span className="text-trace" style={{ textShadow: 'var(--glow-text)' }}>
-              Opening August 29.
+              Open 24/7.
             </span>
           </h1>
 
@@ -94,9 +94,8 @@ export default function Hero({ active = true }: { active?: boolean }) {
             data-reveal
             style={{ '--i': 2 } as React.CSSProperties}
           >
-            Three private bays. Tour-level Trackman iO. Sign up now for
-            priority access before we open on August 29, 2026. 24/7
-            self-service access after launch.
+            Three private bays. Tour-level Trackman iO. Book your time online,
+            receive your PIN, and play on your schedule — day or night.
           </p>
 
           <p
@@ -104,7 +103,7 @@ export default function Hero({ active = true }: { active?: boolean }) {
             data-reveal
             style={{ '--i': 3 } as React.CSSProperties}
           >
-            Grand opening: August 29, 2026
+            Now open · 24/7 self-service access
           </p>
 
           <div className="mt-5 md:mt-8" data-reveal style={{ '--i': 4 } as React.CSSProperties}>

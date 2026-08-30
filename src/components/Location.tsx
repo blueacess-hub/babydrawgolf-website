@@ -7,6 +7,15 @@ import siteData from '@/data/site.json';
 import InstagramIcon from './InstagramIcon';
 import Logo from './Logo';
 
+const localPages = [
+  { href: '/pricing', label: 'Pricing' },
+  { href: '/memberships', label: 'Memberships' },
+  { href: '/trackman-io', label: 'TrackMan iO' },
+  { href: '/24-7-indoor-golf-cypress', label: '24/7 Golf' },
+  { href: '/visit', label: 'Visit' },
+  { href: '/faq', label: 'FAQ' },
+];
+
 export default function Location() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const mapSrc =
@@ -53,7 +62,7 @@ export default function Location() {
             <div className="flex items-center gap-5 md:gap-8" data-reveal style={{ '--i': 2 } as React.CSSProperties}>
               {/* 24/7 as jewelry */}
               <div className="shrink-0 pr-5 md:pr-8 border-r border-[var(--hairline)]">
-                <p className="font-data text-[10px] font-medium tracking-[.2em] text-ink-mute uppercase">After Opening</p>
+                <p className="font-data text-[10px] font-medium tracking-[.2em] text-ink-mute uppercase">Now Open</p>
                 <p className="font-data font-bold tabular-nums text-trace-soft text-[44px] md:text-[56px] leading-none mt-1">
                   24/7
                 </p>
@@ -74,7 +83,7 @@ export default function Location() {
                   <Clock className="w-4 h-4 text-trace mt-0.5 shrink-0" />
                   <div>
                     <p className="font-display font-semibold uppercase tracking-wide text-ink text-xs md:text-[13px]">Hours</p>
-                    <p className="text-ink-mute text-xs md:text-[13px] font-normal">Opens August 29, then 24/7 self-service</p>
+                    <p className="text-ink-mute text-xs md:text-[13px] font-normal">Open 24/7 · unmanned, self-service access</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
@@ -162,6 +171,13 @@ export default function Location() {
             </p>
           </div>
         </div>
+        <nav aria-label="Explore BABYDRAW GOLF" className="mx-auto mt-3 flex max-w-7xl flex-wrap justify-center gap-x-4 gap-y-1 border-t border-[var(--hairline)] pt-3 md:justify-start">
+          {localPages.map((page) => (
+            <a key={page.href} href={page.href} className="font-data text-[9px] uppercase tracking-[.1em] text-ink-mute transition-colors hover:text-trace-soft md:text-[10px]">
+              {page.label}
+            </a>
+          ))}
+        </nav>
       </div>
     </section>
   );

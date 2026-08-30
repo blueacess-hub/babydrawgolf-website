@@ -253,7 +253,7 @@ export default function Pricing() {
             >
               Memberships
             </h3>
-            <p className="font-data text-[10px] text-ink-mute mb-2">Select a membership, then continue to signup.</p>
+            <p className="font-data text-[10px] text-ink-mute mb-2">Select a membership, then continue to join.</p>
             <div
               className="mb-3 flex items-start gap-2.5 rounded-card border border-[rgba(69,240,166,.28)] bg-[rgba(69,240,166,.06)] px-4 py-3"
               data-reveal
@@ -264,7 +264,7 @@ export default function Pricing() {
                 <strong className="text-ink">Designed to stay uncrowded.</strong> Membership is capped — once it&apos;s full, public bookings close and bays are reserved for members.
               </p>
             </div>
-            {/* Founding 25 — pre-launch charter offer */}
+            {/* Founding 25 — limited charter offer */}
             <button
               type="button"
               onClick={() => setSelectedMembership('Founding 25')}
@@ -279,10 +279,10 @@ export default function Pricing() {
                   <SelectionMark />
                   <div>
                     <p className="font-data text-[10px] md:text-[11px] font-medium tracking-[.18em] text-trace uppercase">
-                      Founding 25 — Pre-Opening Only
+                      Founding 25 — Limited Availability
                     </p>
                     <p className="mt-1 text-xs md:text-[13px] text-ink-body font-normal">
-                      Eagle benefits, <strong className="text-ink">locked for life</strong>. 25 spots. Pre-opening payments credit toward future dues.
+                      Eagle benefits with a <strong className="text-ink">$149 rate locked for life</strong> while your membership stays active. Limited to the first 25 members.
                     </p>
                   </div>
                 </div>

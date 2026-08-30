@@ -3,7 +3,6 @@ import { Inter, Oswald, Roboto_Mono } from 'next/font/google';
 import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
-import faqData from '@/data/faq.json';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -27,15 +26,21 @@ const robotoMono = Roboto_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://babydrawgolf.net'),
-  title: 'BABYDRAW GOLF | Indoor Golf Simulator in Cypress, TX',
+  title: {
+    default: '24/7 Indoor Golf Simulator in Cypress, TX | BABYDRAW GOLF',
+    template: '%s | BABYDRAW GOLF',
+  },
   description:
-    'Private indoor golf simulator bay with Trackman iO technology in Cypress, Texas. Grand opening: August 29, 2026. Sign up now for priority access.',
+    'Book a private Trackman iO golf simulator bay in Cypress, TX. Open 24/7 with three private bays, hourly play, memberships, and self-service PIN access.',
   keywords:
     'indoor golf simulator, Cypress TX, Trackman simulator, 24/7 golf, golf simulator near me, virtual golf Cypress, babydraw golf',
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
-    title: 'BABYDRAW GOLF | Indoor Golf Simulator in Cypress, TX',
+    title: '24/7 Indoor Golf Simulator in Cypress, TX | BABYDRAW GOLF',
     description:
-      'Private indoor golf simulator bay with Trackman iO technology. Grand opening: August 29, 2026 in Cypress, Texas.',
+      'Book a private Trackman iO golf simulator bay in Cypress, TX. Open 24/7 with hourly play, memberships, and self-service PIN access.',
     url: 'https://babydrawgolf.net',
     siteName: 'BABYDRAW GOLF',
     type: 'website',
@@ -43,9 +48,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'BABYDRAW GOLF | Indoor Golf Simulator in Cypress, TX',
+    title: '24/7 Indoor Golf Simulator in Cypress, TX | BABYDRAW GOLF',
     description:
-      'Three private Trackman iO bays. Grand opening: August 29, 2026. Sign up now for priority access.',
+      'Three private Trackman iO bays in Cypress, TX. Open 24/7. Book your time online.',
   },
   robots: {
     index: true,
@@ -67,12 +72,19 @@ function StructuredData() {
   const localBusiness = {
     '@context': 'https://schema.org',
     '@type': 'SportsActivityLocation',
+    '@id': 'https://babydrawgolf.net/#business',
     name: 'BABYDRAW GOLF',
     description:
-      'Private indoor golf simulator bay with Trackman iO technology. Grand opening: August 29, 2026.',
+      'A 24/7 indoor golf simulator facility with three private Trackman iO bays in Cypress, Texas.',
     url: 'https://babydrawgolf.net',
-    telephone: '',
+    image: 'https://babydrawgolf.net/opengraph-image.png',
     email: 'info@babydrawgolf.net',
+    priceRange: '$30-$249',
+    sameAs: [
+      'https://www.instagram.com/baby_drawgolf/',
+      'https://tiktok.com/@babydrawgolf',
+      'https://www.facebook.com/profile.php?id=61591939702138',
+    ],
     address: {
       '@type': 'PostalAddress',
       streetAddress: '20049 House Hahl Rd Ste 501',
@@ -97,30 +109,22 @@ function StructuredData() {
     },
   };
 
-  const faqPage = {
+  const website = {
     '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqData.map((item) => ({
-      '@type': 'Question',
-      name: item.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: item.answer,
-      },
-    })),
+    '@type': 'WebSite',
+    '@id': 'https://babydrawgolf.net/#website',
+    url: 'https://babydrawgolf.net',
+    name: 'BABYDRAW GOLF',
+    publisher: { '@id': 'https://babydrawgolf.net/#business' },
   };
 
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusiness) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPage) }}
-      />
-    </>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify([localBusiness, website]).replace(/</g, '\\u003c'),
+      }}
+    />
   );
 }
 
