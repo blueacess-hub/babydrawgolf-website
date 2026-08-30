@@ -86,6 +86,7 @@ function StructuredData() {
     image: 'https://babydrawgolf.net/opengraph-image.png',
     email: 'info@babydrawgolf.net',
     priceRange: '$30-$249',
+    hasMap: 'https://www.google.com/maps?cid=15886570937981137446',
     sameAs: [
       'https://www.instagram.com/baby_drawgolf/',
       'https://tiktok.com/@babydrawgolf',
@@ -112,6 +113,44 @@ function StructuredData() {
       ],
       opens: '00:00',
       closes: '23:59',
+    },
+    potentialAction: {
+      '@type': 'ReserveAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: 'https://booking.trackmangolf.com/venues/baby-draw-golf',
+        inLanguage: 'en-US',
+        actionPlatform: [
+          'https://schema.org/DesktopWebPlatform',
+          'https://schema.org/MobileWebPlatform',
+        ],
+      },
+      result: {
+        '@type': 'Reservation',
+        name: 'Private Trackman iO bay reservation',
+      },
+    },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Indoor golf simulator bay time and memberships',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          url: 'https://babydrawgolf.net/pricing',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Private Trackman iO bay rental',
+          },
+        },
+        {
+          '@type': 'Offer',
+          url: 'https://babydrawgolf.net/memberships',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Indoor golf membership',
+          },
+        },
+      ],
     },
   };
 
