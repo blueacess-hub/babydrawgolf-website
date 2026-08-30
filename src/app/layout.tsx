@@ -56,6 +56,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  verification: {
+    google: 'YpIjiHM5Urd_SKG7RROLi02wMZwMAA6JO7cSoF3aawM',
+  },
 };
 
 // viewport-fit=cover is required for env(safe-area-inset-*) to resolve to real
