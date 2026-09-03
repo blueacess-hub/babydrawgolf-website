@@ -234,7 +234,6 @@ function VisitContent() {
           <li>— Keep your unique entry PIN ready at the door.</li>
           <li>— Bring your clubs or rent a full set for $25 per person.</li>
           <li>— Athletic shoes are fine; golf shoes are optional.</li>
-          <li>— Drinks and snacks are welcome, but no glass containers.</li>
         </ul>
       </Panel>
     </div>

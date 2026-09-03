@@ -120,7 +120,7 @@ const memberships = [
   { tier: 'Ace', price: '$249', unit: '/mo', hours: 'Unlimited · 3-hr sessions', extra: 'Free guests anytime', highlighted: false, lux: true },
 ];
 
-const included = ['Trackman iO simulator', '200+ courses', 'Swing analytics', 'BYOB welcome'];
+const included = ['Trackman iO simulator', '200+ courses', 'Swing analytics'];
 
 export default function Pricing() {
   const [selectedRate, setSelectedRate] = useState<string | null>(null);
