@@ -103,6 +103,7 @@ function SelectionCTA({ href, label, emptyLabel, location }: {
   return (
     <a
       href={href}
+      data-booking-location={location}
       target="_blank"
       rel="noopener noreferrer"
       onClick={() => trackBookNowClick(location)}

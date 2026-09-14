@@ -54,6 +54,7 @@ export default function BookNowButton({
   return (
     <a
       href={BOOKING_URL}
+      data-booking-location={location}
       target="_blank"
       rel="noopener noreferrer"
       onClick={handleClick}

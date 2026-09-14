@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Inter, Oswald, Roboto_Mono } from 'next/font/google';
 import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/next';
+import BookingAttribution from '@/components/BookingAttribution';
 import './globals.css';
 
 const inter = Inter({
@@ -205,6 +206,7 @@ export default function RootLayout({
       <body className="h-full overflow-hidden font-sans">
         {children}
         <Analytics />
+        <BookingAttribution />
 
         {/* Google Analytics 4 */}
         {GA_ID && (
