@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Check, Moon, Users } from 'lucide-react';
 import pricingData from '@/data/pricing.json';
+import GrandOpeningOffer, { useGrandOpeningVisible } from './GrandOpeningOffer';
 import { trackBookNowClick } from '@/lib/analytics';
 
 const BOOKING_URL = process.env.NEXT_PUBLIC_TRACKMAN_BOOKING_URL || '';
@@ -124,6 +125,7 @@ const memberships = [
 const included = ['Trackman iO simulator', '200+ courses', 'Swing analytics'];
 
 export default function Pricing() {
+  const grandOpeningVisible = useGrandOpeningVisible();
   const [selectedRate, setSelectedRate] = useState<string | null>(null);
   const [selectedMembership, setSelectedMembership] = useState<string | null>(null);
 
@@ -163,6 +165,7 @@ export default function Pricing() {
         <div className="grid lg:grid-cols-2 gap-6 md:gap-10 mt-5 md:mt-6">
           {/* Zone A — the rate board */}
           <div data-reveal-group>
+            <GrandOpeningOffer placement="pricing" />
             <h3
               className="font-data text-[11px] font-medium tracking-[.18em] text-ink-mute uppercase mb-2"
               data-reveal
@@ -191,7 +194,8 @@ export default function Pricing() {
                   </div>
                   <div className="leader flex-1 mb-1.5 min-w-4" aria-hidden="true" />
                   <p className="shrink-0 font-data font-bold tabular-nums text-trace-soft group-hover:text-trace transition-colors duration-300 text-[26px] md:text-[32px] leading-none">
-                    {tier.price}
+                    {grandOpeningVisible && <s className="block text-sm font-normal text-ink-mute mb-1">{tier.price}{tier.unit}</s>}
+                    {grandOpeningVisible ? '$19.90' : tier.price}
                     <span className="text-[11px] md:text-xs font-medium text-ink-mute">{tier.unit}</span>
                   </p>
                 </RateRow>
@@ -212,7 +216,8 @@ export default function Pricing() {
                 </div>
                 <div className="leader flex-1 mb-1.5 min-w-4" aria-hidden="true" />
                 <p className="shrink-0 font-data font-bold tabular-nums text-trace text-[26px] md:text-[32px] leading-none">
-                  $30<span className="text-[11px] md:text-xs font-medium text-ink-mute">/hr</span>
+                  {grandOpeningVisible && <s className="block text-sm font-normal text-ink-mute mb-1">$30/hr</s>}
+                  {grandOpeningVisible ? '$19.90' : '$30'}<span className="text-[11px] md:text-xs font-medium text-ink-mute">/hr</span>
                 </p>
               </RateRow>
 
@@ -229,13 +234,13 @@ export default function Pricing() {
                   Bring your own clubs or rent ours: <span className="font-data font-bold text-ink">$25/person</span>
                 </p>
                 <p className="mt-1.5 text-[11px] md:text-xs text-trace-soft font-normal">
-                  Per bay, not per person — split it with 3 friends and it&apos;s from ~$9/hr each.
+                  {grandOpeningVisible ? 'Opening week: $19.90 per bay/hour for up to 4 players, September 28–October 4.' : 'Per bay, not per person — split it with 3 friends and it’s from ~$9/hr each.'}
                 </p>
                 <div className="mt-4">
                   <div aria-live="polite">
                     <SelectionCTA
                       href={selectedRateDetails && BOOKING_URL ? BOOKING_URL : ''}
-                      label={selectedRateDetails ? `Continue — ${selectedRateDetails.tier} ${selectedRateDetails.price}${selectedRateDetails.unit}` : ''}
+                      label={selectedRateDetails ? `Continue — ${selectedRateDetails.tier} ${grandOpeningVisible ? '$19.90' : selectedRateDetails.price}${selectedRateDetails.unit}` : ''}
                       emptyLabel="Select a rate above"
                       location={`pricing-${selectedRate?.toLowerCase().replaceAll(' ', '-') || 'unselected'}-continue`}
                     />

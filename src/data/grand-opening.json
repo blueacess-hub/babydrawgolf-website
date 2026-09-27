@@ -1,0 +1,12 @@
+{
+  "enabled": true,
+  "headline": "Grand Opening Week",
+  "price": "$19.90",
+  "unit": "/ bay / hour",
+  "dateLabel": "September 28\u2013October 4, 2026",
+  "startsAt": "2026-09-28T00:00:00-05:00",
+  "endsAt": "2026-10-05T00:00:00-05:00",
+  "confirmedDates": true,
+  "confirmedTerms": true,
+  "bookingPriceVerified": true
+}

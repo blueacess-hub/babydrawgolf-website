@@ -1,3 +1,4 @@
+import offer from '@/data/grand-opening.json';
 import { NextRequest, NextResponse } from 'next/server';
 
 // Moonshot AI (Kimi) — OpenAI-compatible chat completions API.
@@ -99,7 +100,9 @@ export async function POST(req: NextRequest) {
 
     // OpenAI-compatible message array: system prompt first, then history
     const messages: Array<{ role: string; content: string }> = [
-      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'system', content: SYSTEM_PROMPT + (offer.enabled && Date.now() < Date.parse(offer.endsAt)
+        ? '\nGRAND OPENING PROMOTION: For sessions September 28–October 4, 2026 inclusive (America/Chicago), Public Rate is $19.90 per bay/hour, all day, all 3 bays. This replaces all standard hourly rates for those session dates only. Taxes and booking fees apply. Included member hours remain unchanged. Mention dates with every promotional price; do not claim the rate applies outside those dates. Do not claim any number of founding membership spots remaining.'
+        : '') },
     ];
     if (Array.isArray(history)) {
       for (const h of history.slice(-10)) { // Keep last 10 messages for context

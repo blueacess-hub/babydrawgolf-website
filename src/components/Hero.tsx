@@ -4,8 +4,10 @@ import { useState } from 'react';
 import BookNowButton from './BookNowButton';
 import TracerArc from './fx/TracerArc';
 import HudReadout from './fx/HudReadout';
+import GrandOpeningOffer, { useGrandOpeningVisible } from './GrandOpeningOffer';
 
 export default function Hero({ active = true }: { active?: boolean }) {
+  const grandOpeningVisible = useGrandOpeningVisible();
   // Remount the launch sequence each time the card re-activates so the
   // tracer + HUD replay. Render-time previous-value comparison (no effect).
   const [seq, setSeq] = useState({ active, launch: active ? 1 : 0 });
@@ -52,7 +54,7 @@ export default function Hero({ active = true }: { active?: boolean }) {
       {/* Copy — bottom-left anchored by the section's justify-end */}
       <div className="relative z-10">
         <div
-          className="px-5 md:px-16 lg:px-24 max-w-3xl pb-[calc(88px+env(safe-area-inset-bottom))] md:pb-[calc(110px+env(safe-area-inset-bottom))]"
+          className={`px-5 md:px-16 lg:px-24 max-w-3xl pb-[calc(88px+env(safe-area-inset-bottom))] md:pb-[calc(110px+env(safe-area-inset-bottom))] ${grandOpeningVisible ? 'pt-24' : ''}`}
           data-reveal-group
         >
           {/* Broadcast eyebrow */}
@@ -78,7 +80,7 @@ export default function Hero({ active = true }: { active?: boolean }) {
           </div>
 
           <h1
-            className="mt-3 md:mt-4 text-[clamp(2.3rem,10.5vw,3rem)] md:text-[clamp(2.75rem,8.5vw,6rem)]"
+            className={`mt-3 md:mt-4 text-[clamp(2.3rem,10.5vw,3rem)] ${grandOpeningVisible ? 'md:text-[clamp(2.75rem,6vw,4.25rem)]' : 'md:text-[clamp(2.75rem,8.5vw,6rem)]'}`}
             data-reveal
             style={{ '--i': 1 } as React.CSSProperties}
           >
@@ -105,6 +107,8 @@ export default function Hero({ active = true }: { active?: boolean }) {
           >
             Now open · 24/7 self-service access
           </p>
+
+          <GrandOpeningOffer placement="hero" />
 
           <div className="mt-5 md:mt-8" data-reveal style={{ '--i': 4 } as React.CSSProperties}>
             <BookNowButton location="hero" size="lg" className="cta-launch cta-pulse" />
