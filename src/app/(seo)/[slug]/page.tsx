@@ -10,10 +10,10 @@ const baseUrl = 'https://babydrawgolf.net';
 const pageDetails = {
   pricing: {
     title: 'Indoor Golf Pricing in Cypress, TX',
-    description: 'See BABYDRAW GOLF hourly bay rates and current offers in Cypress, TX. Prices are per private Trackman iO bay for up to four players.',
+    description: 'See BABYDRAW GOLF hourly bay rates in Cypress, TX. Prices are per private Trackman iO bay for up to four players.',
     eyebrow: 'Transparent bay rates',
     heading: 'Indoor Golf Pricing in Cypress, TX',
-    intro: 'Explore our hourly rates and current offers. One booking covers up to four players, and every bay includes Trackman iO, 200+ virtual courses, and swing analytics.',
+    intro: 'Explore our hourly rates. One booking covers up to four players, and every bay includes Trackman iO, 200+ virtual courses, and swing analytics.',
   },
   memberships: {
     title: 'Indoor Golf Memberships in Cypress, TX',
